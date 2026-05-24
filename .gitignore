@@ -1,0 +1,16 @@
+*.iml
+.gradle
+/local.properties
+/gradle/jdk.home
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+*.xcuserdata
+*.xcworkspace
+xcuserdata/
+DerivedData/
+*.hprof
+.kotlin/

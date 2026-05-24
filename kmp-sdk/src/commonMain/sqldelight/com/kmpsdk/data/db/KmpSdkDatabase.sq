@@ -1,0 +1,99 @@
+-- Cached API responses with TTL
+CREATE TABLE api_cache (
+    cache_key TEXT NOT NULL PRIMARY KEY,
+    response_body TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    ttl_millis INTEGER NOT NULL
+);
+
+CREATE INDEX api_cache_created_at ON api_cache(created_at);
+
+-- Offline request queue for replay when connectivity returns
+CREATE TABLE offline_queue (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    method TEXT NOT NULL,
+    url TEXT NOT NULL,
+    headers_json TEXT NOT NULL,
+    body TEXT,
+    priority INTEGER NOT NULL DEFAULT 0,
+    created_at INTEGER NOT NULL,
+    retry_count INTEGER NOT NULL DEFAULT 0,
+    max_retries INTEGER NOT NULL DEFAULT 3,
+    status TEXT NOT NULL DEFAULT 'PENDING'
+);
+
+CREATE INDEX offline_queue_status_priority ON offline_queue(status, priority DESC, created_at ASC);
+
+-- User actions stored offline
+CREATE TABLE offline_action (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    action_type TEXT NOT NULL,
+    payload_json TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    status TEXT NOT NULL DEFAULT 'PENDING'
+);
+
+selectAllPendingQueueItems:
+SELECT *
+FROM offline_queue
+WHERE status = 'PENDING'
+ORDER BY priority DESC, created_at ASC;
+
+selectQueueItemById:
+SELECT *
+FROM offline_queue
+WHERE id = ?;
+
+insertQueueItem:
+INSERT INTO offline_queue(method, url, headers_json, body, priority, created_at, retry_count, max_retries, status)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateQueueItemStatus:
+UPDATE offline_queue
+SET status = ?, retry_count = ?
+WHERE id = ?;
+
+deleteQueueItem:
+DELETE FROM offline_queue
+WHERE id = ?;
+
+clearQueue:
+DELETE FROM offline_queue;
+
+countPendingQueueItems:
+SELECT COUNT(*) FROM offline_queue WHERE status = 'PENDING';
+
+selectCacheEntry:
+SELECT *
+FROM api_cache
+WHERE cache_key = ?;
+
+insertCacheEntry:
+INSERT OR REPLACE INTO api_cache(cache_key, response_body, created_at, ttl_millis)
+VALUES (?, ?, ?, ?);
+
+deleteExpiredCache:
+DELETE FROM api_cache
+WHERE (created_at + ttl_millis) < ?;
+
+deleteCacheEntry:
+DELETE FROM api_cache
+WHERE cache_key = ?;
+
+insertOfflineAction:
+INSERT INTO offline_action(action_type, payload_json, created_at, status)
+VALUES (?, ?, ?, ?);
+
+selectPendingActions:
+SELECT *
+FROM offline_action
+WHERE status = 'PENDING'
+ORDER BY created_at ASC;
+
+updateOfflineActionStatus:
+UPDATE offline_action
+SET status = ?
+WHERE id = ?;
+
+selectLastInsertRowId:
+SELECT last_insert_rowid();

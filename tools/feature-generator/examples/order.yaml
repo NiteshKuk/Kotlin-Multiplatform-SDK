@@ -1,0 +1,10 @@
+feature: Order
+endpoint: /orders
+sync: list
+fields:
+  - name: id
+    type: String
+  - name: title
+    type: String
+  - name: amount
+    type: Double
