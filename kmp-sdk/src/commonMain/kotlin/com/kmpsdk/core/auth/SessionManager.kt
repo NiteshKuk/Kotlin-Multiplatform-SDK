@@ -14,7 +14,6 @@ class SessionManager(
     private val refreshHandler: TokenRefreshHandler? = null,
     private val logger: Logger = Logger.create("SessionManager"),
 ) {
-    @Volatile
     var cachedAccessToken: String? = null
         private set
 

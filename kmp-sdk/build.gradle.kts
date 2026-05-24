@@ -5,13 +5,18 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
+    `maven-publish`
 }
+
+group = findProperty("sdkGroup")?.toString() ?: "com.kmpsdk"
+version = findProperty("sdkVersion")?.toString() ?: "1.0.0-SNAPSHOT"
 
 kotlin {
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
+        publishLibraryVariants("release")
     }
 
     listOf(
@@ -66,6 +71,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 sqldelight {
@@ -74,6 +85,41 @@ sqldelight {
             packageName.set("com.kmpsdk.data.db")
             schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
             verifyMigrations.set(true)
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri(
+                findProperty("publishRepoUrl") as String?
+                    ?: "https://maven.pkg.github.com/NiteshKuk/Kotlin-Multiplatform-SDK",
+            )
+            credentials {
+                username = findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR") ?: ""
+                password = findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN") ?: ""
+            }
+        }
+    }
+
+    publications.withType<MavenPublication>().configureEach {
+        pom {
+            name.set("KmpSDK")
+            description.set("Headless Kotlin Multiplatform SDK for Android and iOS.")
+            url.set("https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK")
+            developers {
+                developer {
+                    id.set("NiteshKuk")
+                    name.set("NiteshKuk")
+                }
+            }
+            scm {
+                connection.set("scm:git:git://github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git")
+                developerConnection.set("scm:git:ssh://github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git")
+                url.set("https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK")
+            }
         }
     }
 }

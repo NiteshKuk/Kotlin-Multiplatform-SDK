@@ -8,18 +8,18 @@ actual class PlatformTokenStore actual constructor() : TokenStore {
         KmpSdkAndroid.requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    override suspend fun getAccessToken(): String? = prefs.getString(KEY_ACCESS, null)
+    actual override suspend fun getAccessToken(): String? = prefs.getString(KEY_ACCESS, null)
 
-    override suspend fun getRefreshToken(): String? = prefs.getString(KEY_REFRESH, null)
+    actual override suspend fun getRefreshToken(): String? = prefs.getString(KEY_REFRESH, null)
 
-    override suspend fun saveTokens(accessToken: String, refreshToken: String?) {
+    actual override suspend fun saveTokens(accessToken: String, refreshToken: String?) {
         prefs.edit()
             .putString(KEY_ACCESS, accessToken)
             .putString(KEY_REFRESH, refreshToken)
             .apply()
     }
 
-    override suspend fun clear() {
+    actual override suspend fun clear() {
         prefs.edit().clear().apply()
     }
 

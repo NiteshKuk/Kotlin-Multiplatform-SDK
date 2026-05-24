@@ -5,13 +5,13 @@ import platform.Foundation.NSUserDefaults
 actual class PlatformTokenStore actual constructor() : TokenStore {
     private val defaults = NSUserDefaults.standardUserDefaults
 
-    override suspend fun getAccessToken(): String? =
+    actual override suspend fun getAccessToken(): String? =
         defaults.stringForKey(KEY_ACCESS)
 
-    override suspend fun getRefreshToken(): String? =
+    actual override suspend fun getRefreshToken(): String? =
         defaults.stringForKey(KEY_REFRESH)
 
-    override suspend fun saveTokens(accessToken: String, refreshToken: String?) {
+    actual override suspend fun saveTokens(accessToken: String, refreshToken: String?) {
         defaults.setObject(accessToken, KEY_ACCESS)
         if (refreshToken != null) {
             defaults.setObject(refreshToken, KEY_REFRESH)
@@ -21,7 +21,7 @@ actual class PlatformTokenStore actual constructor() : TokenStore {
         defaults.synchronize()
     }
 
-    override suspend fun clear() {
+    actual override suspend fun clear() {
         defaults.removeObjectForKey(KEY_ACCESS)
         defaults.removeObjectForKey(KEY_REFRESH)
         defaults.synchronize()

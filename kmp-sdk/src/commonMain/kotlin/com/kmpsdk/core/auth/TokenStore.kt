@@ -28,4 +28,9 @@ class InMemoryTokenStore : TokenStore {
     }
 }
 
-expect class PlatformTokenStore() : TokenStore
+expect class PlatformTokenStore() : TokenStore {
+    override suspend fun getAccessToken(): String?
+    override suspend fun getRefreshToken(): String?
+    override suspend fun saveTokens(accessToken: String, refreshToken: String?)
+    override suspend fun clear()
+}

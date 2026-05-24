@@ -22,7 +22,7 @@ class TieredCacheStore(
     private val memoryCapacity: Int = 128,
 ) : CacheStore {
     private val mutex = Mutex()
-    private val memory = LinkedHashMap<String, CacheEntry>(memoryCapacity, 0.75f, true)
+    private val memory = mutableMapOf<String, CacheEntry>()
 
     override suspend fun get(key: String): String? = mutex.withLock {
         val now = Clock.System.now().toEpochMilliseconds()
@@ -62,7 +62,11 @@ class TieredCacheStore(
     suspend fun purgeExpired() {
         val now = Clock.System.now().toEpochMilliseconds()
         mutex.withLock {
-            memory.entries.removeIf { (_, entry) -> entry.isExpired(now) }
+            memory.keys.toList().forEach { key ->
+                if (memory[key]?.isExpired(now) == true) {
+                    memory.remove(key)
+                }
+            }
             database.kmpSdkDatabaseQueries.deleteExpiredCache(now)
         }
     }

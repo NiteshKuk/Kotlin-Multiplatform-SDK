@@ -33,16 +33,90 @@ The **v1.4 — Rich SDK additions** section below Step 20 documents profiles, te
 
 ### Step 1 — Add the dependency
 
-Add `kmp-sdk` to your host **shared** module.
+Add `kmp-sdk` to your host **shared** module:
 
-**Example (`shared/build.gradle.kts`):**
+```kotlin
+implementation("com.kmpsdk:kmp-sdk:1.0.0")
+```
+
+**Maven coordinates:**
+
+| Field | Value |
+|-------|--------|
+| Group | `com.kmpsdk` |
+| Artifact | `kmp-sdk` |
+| Version | `1.0.0` (see [GitHub Releases](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases)) |
+
+> **Note:** JitPack uses `com.github.*` coordinates and cannot publish as `com.kmpsdk`. Use **GitHub Packages** (below) or **Maven Central** (future) for this artifact ID.
+
+---
+
+#### GitHub Packages (current registry)
+
+1. Publish a release (see [Publishing to Maven](#publishing-to-maven)).
+2. Add the GitHub Packages repository in **`settings.gradle.kts`**:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/NiteshKuk/Kotlin-Multiplatform-SDK")
+            credentials {
+                username = providers.gradleProperty("gpr.user").getOrElse("")
+                password = providers.gradleProperty("gpr.key").getOrElse("")
+            }
+        }
+    }
+}
+```
+
+3. Add credentials to **`~/.gradle/gradle.properties`** (do not commit):
+
+```properties
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.key=YOUR_GITHUB_PAT
+```
+
+Create a PAT with `read:packages` scope.
+
+4. In **`shared/build.gradle.kts`**:
+
+```kotlin
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation("com.kmpsdk:kmp-sdk:1.0.0")
+        }
+    }
+}
+```
+
+---
+
+#### Maven Central (future — no extra repository for users)
+
+Once published to Maven Central, users only need:
+
+```kotlin
+// settings.gradle.kts — mavenCentral() is enough
+implementation("com.kmpsdk:kmp-sdk:1.0.0")
+```
+
+See [Publishing to Maven](#publishing-to-maven) for the maintainer setup path.
+
+---
+
+#### Local development (clone this repo)
+
+If you vendor the SDK source as a Gradle module:
 
 ```kotlin
 kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":kmp-sdk"))
-            // or: implementation("com.yourorg:kmpsdk:1.0.0")
         }
     }
 }
@@ -987,6 +1061,68 @@ Optional shortcuts (v1.4): run `tools/feature-generator/generate.py` to scaffold
 
 ---
 
+## Publishing to Maven
+
+Use this when you maintain the repo and want users to consume `com.kmpsdk:kmp-sdk` from Maven instead of a local AAR.
+
+### Maven coordinates
+
+Configured in `gradle.properties`:
+
+```properties
+sdkGroup=com.kmpsdk
+sdkVersion=1.0.0
+```
+
+Bump `sdkVersion` before each release.
+
+### Publish locally (test before release)
+
+```powershell
+.\gradlew.bat :kmp-sdk:publishToMavenLocal
+```
+
+Then in a test app:
+
+```kotlin
+repositories { mavenLocal() }
+implementation("com.kmpsdk:kmp-sdk:1.0.0")
+```
+
+### Publish to GitHub Packages
+
+**Automatic (recommended):** push a [GitHub Release](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases) — the workflow `.github/workflows/publish-github-packages.yml` publishes on `release: published`.
+
+**Manual:**
+
+```powershell
+# Set once in ~/.gradle/gradle.properties (see gradle/publishing.properties.example)
+.\gradlew.bat :kmp-sdk:publishAllPublicationsToGitHubPackagesRepository
+```
+
+Requires `gpr.user` and `gpr.key` (PAT with `write:packages`).
+
+### Maven Central (optional later)
+
+For the cleanest consumer experience — only `mavenCentral()` and `com.kmpsdk:kmp-sdk` with **no GitHub token**:
+
+1. Register at [central.sonatype.com](https://central.sonatype.com)
+2. Verify namespace `com.kmpsdk`
+3. Add signing + Sonatype publish plugin to `kmp-sdk/build.gradle.kts`
+4. Publish with `./gradlew publishAndReleaseToMavenCentral`
+
+This is optional; GitHub Packages works today with the coordinates you want.
+
+### Release checklist
+
+1. Update `sdkVersion` in `gradle.properties`
+2. Run `.\gradlew.bat :kmp-sdk:publishToMavenLocal` and verify
+3. Commit, tag (`git tag 1.0.0`), push tag
+4. Create GitHub Release from the tag
+5. Confirm GitHub Packages workflow succeeded
+
+---
+
 ## Build
 
 Requires **JDK 17+** (Android Studio’s bundled JBR works).
@@ -1053,6 +1189,18 @@ Output: `kmp-sdk/build/outputs/aar/`
 # Windows
 .\gradlew.bat :kmp-sdk:cleanTest :kmp-sdk:allTests
 ```
+
+**Step 5 — Publish to Maven (maintainer)**
+
+```powershell
+# GitHub Packages (after setting gpr.user / gpr.key)
+.\gradlew.bat :kmp-sdk:publishAllPublicationsToGitHubPackagesRepository
+
+# Or test locally first
+.\gradlew.bat :kmp-sdk:publishToMavenLocal
+```
+
+See [Publishing to Maven](#publishing-to-maven) for JitPack and GitHub Packages setup.
 
 ### iOS framework (optional, Mac only)
 

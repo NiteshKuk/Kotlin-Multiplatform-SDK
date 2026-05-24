@@ -1,0 +1,10 @@
+# Copy to ~/.gradle/gradle.properties (recommended) or project gradle.properties
+# Do NOT commit real tokens to git.
+
+# GitHub Packages publish (maintainer)
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.key=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+
+# Optional: override Maven coordinates
+# sdkVersion=1.0.0
+# sdkGroup=com.kmpsdk
