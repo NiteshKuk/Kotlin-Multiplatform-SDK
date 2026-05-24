@@ -13,15 +13,24 @@
   <name>KmpSDK</name>
   <description>Headless Kotlin Multiplatform SDK for Android and iOS.</description>
   <url>https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK</url>
+  <inceptionYear>2025</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>https://www.apache.org/licenses/LICENSE-2.0.txt</distribution>
+    </license>
+  </licenses>
   <developers>
     <developer>
       <id>NiteshKuk</id>
       <name>NiteshKuk</name>
+      <url>https://github.com/NiteshKuk</url>
     </developer>
   </developers>
   <scm>
     <connection>scm:git:git://github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git</connection>
-    <developerConnection>scm:git:ssh://github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git</developerConnection>
+    <developerConnection>scm:git:ssh://git@github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git</developerConnection>
     <url>https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK</url>
   </scm>
   <dependencies>

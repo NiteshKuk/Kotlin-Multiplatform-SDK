@@ -2,7 +2,7 @@
   "formatVersion": "1.1",
   "component": {
     "url": "../../kmp-sdk/1.0.0/kmp-sdk-1.0.0.module",
-    "group": "com.kmpsdk",
+    "group": "in.co.niteshkukreja",
     "module": "kmp-sdk",
     "version": "1.0.0",
     "attributes": {

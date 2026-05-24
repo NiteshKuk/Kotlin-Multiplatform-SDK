@@ -9,6 +9,7 @@ serialization = "1.7.3"
 lifecycle = "2.8.7"
 koin = "4.0.0"
 datetime = "0.6.1"
+mavenPublish = "0.34.0"
 
 [libraries]
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -44,3 +45,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }

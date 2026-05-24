@@ -1,16 +1,16 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml:2:13-83
-INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml:2:13-83
+ADDED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml:2:13-83
+INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml:2:13-83
 	package
-		INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml
+		INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml
 	xmlns:android
-		ADDED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml:2:23-81
+		ADDED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml:2:23-81
 uses-sdk
-INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml reason: use-sdk injection requested
-INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml
-INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml
+INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml reason: use-sdk injection requested
+INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml
+INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml
 	android:targetSdkVersion
-		INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml
+		INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml
 	android:minSdkVersion
-		INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest10350597827196107826.xml
+		INJECTED from E:\AndroidProjects\KMPSdk\kmp-sdk\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest14841809164022118015.xml

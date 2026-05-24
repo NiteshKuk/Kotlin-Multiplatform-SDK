@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -5,10 +6,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
-    `maven-publish`
+    alias(libs.plugins.maven.publish)
 }
 
-group = findProperty("sdkGroup")?.toString() ?: "com.kmpsdk"
+group = findProperty("sdkGroup")?.toString() ?: "in.co.niteshkukreja"
 version = findProperty("sdkVersion")?.toString() ?: "1.0.0-SNAPSHOT"
 
 kotlin {
@@ -89,37 +90,38 @@ sqldelight {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri(
-                findProperty("publishRepoUrl") as String?
-                    ?: "https://maven.pkg.github.com/NiteshKuk/Kotlin-Multiplatform-SDK",
-            )
-            credentials {
-                username = findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR") ?: ""
-                password = findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN") ?: ""
+configure<MavenPublishBaseExtension> {
+    publishToMavenCentral(automaticRelease = true)
+
+    coordinates(
+        groupId = group.toString(),
+        artifactId = "kmp-sdk",
+        version = version.toString(),
+    )
+
+    pom {
+        name.set("KmpSDK")
+        description.set("Headless Kotlin Multiplatform SDK for Android and iOS.")
+        inceptionYear.set("2025")
+        url.set("https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
             }
         }
-    }
-
-    publications.withType<MavenPublication>().configureEach {
-        pom {
-            name.set("KmpSDK")
-            description.set("Headless Kotlin Multiplatform SDK for Android and iOS.")
+        developers {
+            developer {
+                id.set("NiteshKuk")
+                name.set("NiteshKuk")
+                url.set("https://github.com/NiteshKuk")
+            }
+        }
+        scm {
             url.set("https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK")
-            developers {
-                developer {
-                    id.set("NiteshKuk")
-                    name.set("NiteshKuk")
-                }
-            }
-            scm {
-                connection.set("scm:git:git://github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git")
-                developerConnection.set("scm:git:ssh://github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git")
-                url.set("https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK")
-            }
+            connection.set("scm:git:git://github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git")
+            developerConnection.set("scm:git:ssh://git@github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git")
         }
     }
 }
