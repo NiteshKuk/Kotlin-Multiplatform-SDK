@@ -1,5 +1,7 @@
 name: Publish to Maven Central
 
+# Only maintainers should approve the protected environment (see README).
+# Collaborators can open PRs; they cannot publish without your approval.
 on:
   release:
     types: [published]
@@ -11,6 +13,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: maven-central-release
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,7 +25,7 @@ jobs:
           java-version: 17
 
       - name: Publish to Maven Central
-        run: ./gradlew :kmp-sdk:publishToMavenCentral --no-daemon
+        run: ./gradlew :kmp-sdk:publishAndReleaseToMavenCentral --no-daemon
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
