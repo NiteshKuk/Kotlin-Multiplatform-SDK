@@ -9,6 +9,18 @@
 
 Do **not** push directly to `master` (branch protection blocks this for collaborators).
 
+## Integration paths (for docs / features)
+
+When changing README or adding examples, align with the three paths in [README — Choose your integration path](README.md#choose-your-integration-path):
+
+| Path | When |
+|------|------|
+| **A — Online only** | No host SQL; `networkClient` in use case |
+| **B — SDK HTTP cache** | Path A + `enableHttpCache` |
+| **C — Full offline-first** | Host SQL + local/remote + repository |
+
+Do not document Path C (SQL + local + repo) as the only way to use the SDK.
+
 ## Publishing
 
 Only the repository owner publishes to Maven Central.

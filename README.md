@@ -2,7 +2,9 @@
 
 Headless, plug-and-play **Kotlin Multiplatform SDK** for Android and iOS.
 
-KmpSDK gives your host app ready-made infrastructure — networking, offline sync, auth, caching, logging, and MVI **contracts**. **You own all UI** (Compose, SwiftUI, XML, etc.).
+KmpSDK gives your host app ready-made **infrastructure** — networking, auth, optional caching/offline sync, logging, and MVI **contracts**. **You own all UI** (Compose, SwiftUI, XML, etc.).
+
+Not every screen needs SQL, local data sources, or sync repositories. Pick an integration path per feature (see below).
 
 ---
 
@@ -10,10 +12,110 @@ KmpSDK gives your host app ready-made infrastructure — networking, offline syn
 
 | KmpSDK provides (infrastructure) | Host app provides (your code) |
 |-----------------------------------|------------------------------|
-| `KmpSdk.init`, registry, modules | Feature modules, SQL schema, repos |
-| Ktor client, auth plugin, error parsing | DTOs, mappers, use cases |
-| Offline queue, HTTP cache, sync coordinator | ViewModels, screens, navigation |
+| `KmpSdk.init`, registry, modules | Feature modules, DTOs, use cases |
+| Ktor client, auth plugin, error parsing | ViewModels, screens, navigation |
+| Optional offline queue, HTTP cache, sync helpers | **Path C only:** your SQL schema, local/remote sources, repos |
 | `MviViewModel`, `DataState`, message bus | Toast/snackbar/alert UI |
+
+---
+
+## Choose your integration path
+
+Use **one path per feature** (e.g. login = Path A, product catalog = Path C).
+
+### Quick decision
+
+```
+Need this feature's data in YOUR SQL when the device is offline?
+  YES → Path C (full offline-first)
+  NO  → Is showing the last API response offline OK?
+         YES → Path B (network-first + SDK HTTP cache)
+         NO  → Path A (online-only)
+```
+
+### Path comparison
+
+| | **Path A — Online only** | **Path B — SDK HTTP cache** | **Path C — Full offline-first** |
+|---|--------------------------|-------------------------------|----------------------------------|
+| **Best for** | Login, forms, one-shot screens | Lists that can show last fetch offline | Feeds, catalogs, field apps |
+| **Your SQL tables** | Not required | Not required | Required (`AppDatabase.sq`) |
+| **Local data source** | Not required | Not required | Required |
+| **Remote + sync repository** | Not required | Not required | Required (or `installRestListFeature`) |
+| **Typical API** | `KmpSdk.networkClient.get/post` | Same as A | `BaseSyncRepository`, `bindSyncList` |
+| **README steps** | 1–4, then [Path A example](#path-a--online-only-no-your-sql) | 1–4 + [Path B init](#path-b--network-first-sdk-http-cache) | 1–10 (full guide) |
+
+### SDK internal storage (all paths)
+
+`KmpSdk.init` always opens the SDK database (`api_cache`, `offline_queue`, `offline_action`). That is separate from **your** app tables. You control behaviour with init flags (see [Path B init](#path-b--network-first-sdk-http-cache) and [Step 20](#step-20--full-configuration-reference)).
+
+---
+
+### Path A — Online only (no your SQL)
+
+**You write:** use case or ViewModel calling `KmpSdk.networkClient`, plus UI.
+
+**You do not write:** `AppDatabase` table, `LocalDataSource`, or `BaseSyncRepository` for this feature.
+
+**Example init:**
+
+```kotlin
+KmpSdk.init(this) {
+    baseUrl = "https://api.example.com"
+    syncPolicy = SyncPolicy.NETWORK_FIRST
+    enableHttpCache = false
+    queueMutationsWhenOffline = false
+    install(AuthFeatureModule) // modules without SQL are fine
+}
+```
+
+**Example use case:**
+
+```kotlin
+class GetAboutUseCase {
+    suspend fun load(): KmpSdkResult<AboutDto> =
+        KmpSdk.networkClient.get("/about")
+}
+```
+
+**Example feature module (minimal):**
+
+```kotlin
+object AboutFeatureModule : KmpSdkModule {
+    override fun register(registry: KmpSdkRegistry) {
+        registry.register<GetAboutUseCase> { GetAboutUseCase() }
+    }
+}
+```
+
+Wire loading/error/state in your ViewModel (standard `StateFlow` / `DataState`).
+
+---
+
+### Path B — Network-first + SDK HTTP cache
+
+Same app code as Path A for the feature (no your SQL). Offline GET may return the last cached **HTTP body** from the SDK `api_cache` table.
+
+**Example init:**
+
+```kotlin
+KmpSdk.init(this) {
+    baseUrl = "https://api.example.com"
+    syncPolicy = SyncPolicy.NETWORK_FIRST
+    enableHttpCache = true
+    queueMutationsWhenOffline = false // or true if mutations should queue
+    install(ProductListModule)
+}
+```
+
+---
+
+### Path C — Full offline-first (your SQL)
+
+Use when the feature must read/write **your** persisted entities offline.
+
+Follow **Steps 5–10** below (SQL → local → remote → repository → use case → ViewModel).
+
+Shortcuts: `SqlDelightListLocalDataSource`, [`installRestListFeature`](#rest-list-installer-no-custom-repository-class) (no custom repository **class**, but local lambdas still required), `RestMutationUseCase`, feature generator CLI.
 
 ---
 
@@ -27,7 +129,14 @@ KmpSDK gives your host app ready-made infrastructure — networking, offline syn
 
 ## Step-by-step integration guide
 
-**Steps 1–20** cover core integration (dependency → init → features → UI).  
+| Steps | Applies to |
+|-------|------------|
+| **1–4** | All paths (dependency, init, resolve, feature module) |
+| **5–10** | **[Path C](#path-c--full-offline-first-your-sql) only** — SQL, local, remote, repository, use case, ViewModel |
+| **11–20** | Optional/advanced (auth, cache, offline queue, config, v1.4) |
+
+**New to the SDK?** Start with [Path A](#path-a--online-only-no-your-sql). Move to Path C only when you need offline data in **your** database.
+
 **Step 20** lists every init flag in one place (core + v1.4).  
 The **v1.4 — Rich SDK additions** section below Step 20 documents profiles, telemetry, REST installers, dirty sync, tools, and other advanced features.
 
@@ -159,6 +268,9 @@ val userRepo = KmpSdk.get<UserRepository>()
 
 Group registrations per domain (User, Product, Order…) in a `KmpSdkModule`.
 
+- **[Path A/B](#choose-your-integration-path):** register use cases that call `KmpSdk.networkClient` (see [minimal module example](#path-a--online-only-no-your-sql)).
+- **[Path C](#path-c--full-offline-first-your-sql):** register database, repositories, and use cases (example below).
+
 **Example (`UserFeatureModule.kt`):**
 
 ```kotlin
@@ -194,6 +306,8 @@ KmpSdk.init(this) {
 ---
 
 ### Step 5 — Define your SQLDelight schema (host DB)
+
+> **Path C only.** Skip Steps 5–10 if this feature uses [Path A or B](#choose-your-integration-path).
 
 Your app tables live in **your** `AppDatabase.sq` — not in the SDK database.
 
@@ -675,7 +789,7 @@ Each item includes **why** it exists and **one example**. Cross-reference **Step
 | Telemetry hooks | [Telemetry hooks](#telemetry-hooks) |
 | Multi-tenant switching | [Multi-tenant switching](#multi-tenant-switching) |
 | Remote config | [Remote config block](#remote-config-block) |
-| REST list installer | [REST list installer](#rest-list-installer-zero-repo) |
+| REST list installer | [REST list installer](#rest-list-installer-no-custom-repository-class) |
 | REST mutation use case | [REST mutation use case](#rest-mutation-use-case) |
 | Dirty record sync | [Dirty record sync](#dirty-record-sync) |
 | Offline domain actions | [Offline domain actions](#offline-domain-actions) |
@@ -783,17 +897,19 @@ KmpSdk.remoteConfig.values.collect { map -> /* react to updates */ }
 
 ---
 
-### REST list installer (zero-repo)
+### REST list installer (no custom repository class)
 
-**Why:** Standard list APIs need no custom repository class.
+**Why:** Standard list APIs without writing a custom `Repository` implementation class.
+
+**Path:** [Path C](#path-c--full-offline-first-your-sql) — you still provide **local** observe/count/replace (SQL or in-memory store you own). For online-only lists, use [Path A](#path-a--online-only-no-your-sql) with `networkClient.get` instead.
 
 ```kotlin
 KmpSdk.init(this) {
     baseUrl = "https://api.example.com"
-    install(UserFeatureModule) // or use installRestListFeature in module register {}
+    install(UserFeatureModule) // register installRestListFeature inside module
 }
 
-// Inside KmpSdkModule.register:
+// Inside KmpSdkModule.register (after UserLocalDataSource exists):
 installRestListFeature(
     RestListFeatureConfig<User, UserDto>(
         name = "users",
@@ -809,7 +925,7 @@ installRestListFeature(
 
 ### REST mutation use case
 
-**Why:** Standard POST/PUT/PATCH/DELETE with offline queue.
+**Why:** Standard POST/PUT/PATCH/DELETE with optional offline queue ([Path B/C](#choose-your-integration-path)).
 
 ```kotlin
 val createUser = RestMutationUseCase.create<CreateUserBody>(
@@ -1012,18 +1128,33 @@ KmpSDK/
 
 ## Adding a new feature (checklist)
 
+**First:** pick a path in [Choose your integration path](#choose-your-integration-path).
+
+### Path A — Online only
+
+1. Create DTO (+ mapper if needed)
+2. Create use case using `KmpSdk.networkClient`
+3. Register in `XxxFeatureModule`; `install` in `KmpSdk.init`
+4. Build ViewModel + platform UI
+
+### Path B — Network-first + SDK cache
+
+Same as Path A; set `enableHttpCache = true` and `SyncPolicy.NETWORK_FIRST` in init.
+
+### Path C — Full offline-first
+
 1. Add table to **your** `AppDatabase.sq`
 2. Create DTO + mapper + domain model
 3. Create local source (`SqlDelightListLocalDataSource` or paginated variant)
 4. Create remote source (`networkClient.get/post/…`) — or use `installRestListFeature` / `RestMutationUseCase` for standard REST
-5. Create repository (`BaseSyncRepository` or `BasePaginatedRepository`)
+5. Create repository (`BaseSyncRepository` or `BasePaginatedRepository`) unless using `installRestListFeature`
 6. Create use case
 7. Create `XxxFeatureModule` and `registerSyncTarget`
 8. `install(XxxFeatureModule)` in `KmpSdk.init`
 9. Build ViewModel with `bindSyncList` or `PaginatedListController`
 10. Build your platform UI
 
-Optional shortcuts (v1.4): run `tools/feature-generator/generate.py` to scaffold steps 3–7; register offline action handlers with `KmpSdk.offlineActions.registerHandler`.
+**Path C shortcuts (v1.4):** run `tools/feature-generator/generate.py` to scaffold steps 3–7; register offline action handlers with `KmpSdk.offlineActions.registerHandler`.
 
 ---
 

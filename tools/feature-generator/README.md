@@ -2,6 +2,8 @@
 
 Generates feature module + remote data source scaffold from YAML.
 
+**Integration path:** [Path C (full offline-first)](../../README.md#path-c--full-offline-first-your-sql) only. For online-only features, use `KmpSdk.networkClient` directly — see [Path A](../../README.md#path-a--online-only-no-your-sql).
+
 ## Requirements
 
 ```bash
