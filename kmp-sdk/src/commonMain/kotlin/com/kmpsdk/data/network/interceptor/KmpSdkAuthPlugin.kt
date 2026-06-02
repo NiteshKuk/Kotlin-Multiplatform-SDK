@@ -18,12 +18,16 @@ class AuthPluginConfig {
  * Attaches Bearer token to outgoing requests and handles 401 session expiry.
  */
 val KmpSdkAuthPlugin = createClientPlugin("KmpSdkAuth", ::AuthPluginConfig) {
+    val sessionManager = pluginConfig.sessionManager
+    val config = pluginConfig.config
+    val logger = pluginConfig.logger
+
     onRequest { request, _ ->
-        val authConfig = pluginConfig.config.auth
+        val authConfig = config.auth
         if (!authConfig.enabled) return@onRequest
         if (request.headers.contains(HttpHeaders.Authorization)) return@onRequest
 
-        val token = pluginConfig.sessionManager.cachedAccessToken
+        val token = sessionManager.cachedAccessToken
         if (!token.isNullOrBlank()) {
             request.headers.append(
                 authConfig.headerName,
@@ -33,7 +37,7 @@ val KmpSdkAuthPlugin = createClientPlugin("KmpSdkAuth", ::AuthPluginConfig) {
     }
 
     onResponse { response ->
-        val authConfig = pluginConfig.config.auth
+        val authConfig = config.auth
         if (!authConfig.enabled) return@onResponse
         if (response.status != HttpStatusCode.Unauthorized &&
             response.status != HttpStatusCode.Forbidden
@@ -41,9 +45,9 @@ val KmpSdkAuthPlugin = createClientPlugin("KmpSdkAuth", ::AuthPluginConfig) {
             return@onResponse
         }
 
-        val recovered = pluginConfig.sessionManager.handleUnauthorized(response.status.value)
+        val recovered = sessionManager.handleUnauthorized(response.status.value)
         if (!recovered) {
-            pluginConfig.logger.w("Auth failure for ${response.request.url} (${response.status.value})")
+            logger.w("Auth failure for ${response.request.url} (${response.status.value})")
         }
     }
 }
