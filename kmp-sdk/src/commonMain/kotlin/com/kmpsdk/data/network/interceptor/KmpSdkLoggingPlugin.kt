@@ -23,10 +23,9 @@ class KmpSdkLoggingPluginConfig {
 private val RequestBodyKey = io.ktor.util.AttributeKey<String>("KmpSdkRequestBody")
 
 val KmpSdkLoggingPlugin = createClientPlugin("KmpSdkLogging", ::KmpSdkLoggingPluginConfig) {
-    val logger = pluginConfig.logger
-    val config = pluginConfig.config
-
     onRequest { request, body ->
+        val logger = pluginConfig.logger
+        val config = pluginConfig.config
         val bodyText = extractRequestBody(body)
         if (bodyText != null) {
             request.attributes.put(RequestBodyKey, bodyText)
@@ -41,6 +40,8 @@ val KmpSdkLoggingPlugin = createClientPlugin("KmpSdkLogging", ::KmpSdkLoggingPlu
     }
 
     onResponse { response ->
+        val logger = pluginConfig.logger
+        val config = pluginConfig.config
         if (config.enableRequestLogging) {
             val requestBody = response.call.request.attributes.getOrNull(RequestBodyKey)
             logger.d(buildResponseLog(response, requestBody, config))
