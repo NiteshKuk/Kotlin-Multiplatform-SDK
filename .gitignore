@@ -14,3 +14,4 @@ xcuserdata/
 DerivedData/
 *.hprof
 .kotlin/
+**/build/
