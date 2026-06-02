@@ -7,8 +7,8 @@ import com.kmpsdk.core.connectivity.ConnectivityMonitor
 import com.kmpsdk.core.tenant.TenantContext
 import com.kmpsdk.core.logger.Logger
 import com.kmpsdk.data.cache.CacheStore
-import com.kmpsdk.data.network.interceptor.KmpSdkAuthPlugin
-import com.kmpsdk.data.network.interceptor.KmpSdkLoggingPlugin
+import com.kmpsdk.data.network.interceptor.createKmpSdkAuthPlugin
+import com.kmpsdk.data.network.interceptor.createKmpSdkLoggingPlugin
 import com.kmpsdk.core.telemetry.KmpSdkTelemetry
 import com.kmpsdk.core.telemetry.TelemetryEvent
 import com.kmpsdk.data.network.error.ApiErrorParser
@@ -81,17 +81,9 @@ class KmpNetworkClient(
             connectTimeoutMillis = 15_000
             socketTimeoutMillis = 30_000
         }
-        install(KmpSdkLoggingPlugin) {
-            this.logger = logger
-            this.config = config
-            this.json = json
-        }
+        install(createKmpSdkLoggingPlugin(logger, config))
         if (config.auth.enabled) {
-            install(KmpSdkAuthPlugin) {
-                this.sessionManager = sessionManager
-                this.config = config
-                this.logger = logger
-            }
+            install(createKmpSdkAuthPlugin(sessionManager, config, logger))
         }
         defaultRequest {
             url(activeBaseUrl)

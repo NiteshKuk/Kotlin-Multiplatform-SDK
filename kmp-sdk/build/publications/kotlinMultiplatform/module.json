@@ -3,7 +3,7 @@
   "component": {
     "group": "in.co.niteshkukreja",
     "module": "kmp-sdk",
-    "version": "1.0.0",
+    "version": "beta-1.0.2",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -110,13 +110,13 @@
       ],
       "files": [
         {
-          "name": "kmp-sdk-metadata-1.0.0.jar",
-          "url": "kmp-sdk-1.0.0.jar",
-          "size": 65405,
-          "sha512": "ac6273cb956051b83c3851300e1bc54e2df405941dfc166390b6277f89b3464a97edd259c1364177be70eda524f570858c9607367b181a073fac5b5a85a9fed1",
-          "sha256": "2d0b122f1ea7add9454446218d937a7327ec10e821559e4be09697e09d2c7488",
-          "sha1": "b4d60a8697efa746ecc8f92267c2c27cec300448",
-          "md5": "9317b80f3bcff65be30fca7d3e37f9a2"
+          "name": "kmp-sdk-metadata-beta-1.0.2.jar",
+          "url": "kmp-sdk-beta-1.0.2.jar",
+          "size": 65313,
+          "sha512": "a4ed3fd3079e7be9db79c4638070368bf0f70eb95578550f7c95a943ab730190e2e8b34ba73266f82e0de383ef727db3e41d599fb1e2eecd0c1d97cba260fdfc",
+          "sha256": "6af5c0a2a3297bf59f9cf182361f7726af34d68402373c14a31ac8926f9f7938",
+          "sha1": "09915d23ef8ce36952bf3cdb4a20c8678862c4d6",
+          "md5": "244122b3961f7f4edb88689f921822a4"
         }
       ]
     },
@@ -132,13 +132,13 @@
       },
       "files": [
         {
-          "name": "kmp-sdk-kotlin-1.0.0-sources.jar",
-          "url": "kmp-sdk-1.0.0-sources.jar",
-          "size": 67229,
-          "sha512": "23026192e353b84ab9ea967b25f462b702770d866214ccf5b0cba845254316d74aa075dce65abc5ae9e12d6e2352cf5bfc3aef2c0e4341bcccb2f67a89a02849",
-          "sha256": "97d38232c5de79fb5af80f0c94b5a8d23c63e2dfb9ccd60ce0c9494b3791a1fc",
-          "sha1": "a8b024062e78b75846616c0f642c937f1f056343",
-          "md5": "4acbd8ac0ed0d7ccfe36f59b45da9b52"
+          "name": "kmp-sdk-kotlin-beta-1.0.2-sources.jar",
+          "url": "kmp-sdk-beta-1.0.2-sources.jar",
+          "size": 65400,
+          "sha512": "18e650049f72bd60fa38dee0a225e8b8efe079903297f65f07223971b2530073cbf55f3b1a2de1a376a5422db52946a600d7db03821e77d8a3f47443e1e75c09",
+          "sha256": "16a0c4f252cc078418dc6134ddb7920cafb4c78c6390af9e24eeffa56109d7b4",
+          "sha1": "4b523ccd693e73956ba2d218ea476a388108842c",
+          "md5": "f49bbd3e30e6d765973406b8b2caa443"
         }
       ]
     },
@@ -151,10 +151,10 @@
         "org.jetbrains.kotlin.platform.type": "androidJvm"
       },
       "available-at": {
-        "url": "../../kmp-sdk-android/1.0.0/kmp-sdk-android-1.0.0.module",
+        "url": "../../kmp-sdk-android/beta-1.0.2/kmp-sdk-android-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-android",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -166,10 +166,10 @@
         "org.jetbrains.kotlin.platform.type": "androidJvm"
       },
       "available-at": {
-        "url": "../../kmp-sdk-android/1.0.0/kmp-sdk-android-1.0.0.module",
+        "url": "../../kmp-sdk-android/beta-1.0.2/kmp-sdk-android-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-android",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -184,10 +184,10 @@
         "org.jetbrains.kotlin.platform.type": "androidJvm"
       },
       "available-at": {
-        "url": "../../kmp-sdk-android/1.0.0/kmp-sdk-android-1.0.0.module",
+        "url": "../../kmp-sdk-android/beta-1.0.2/kmp-sdk-android-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-android",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -201,10 +201,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iosarm64/1.0.0/kmp-sdk-iosarm64-1.0.0.module",
+        "url": "../../kmp-sdk-iosarm64/beta-1.0.2/kmp-sdk-iosarm64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iosarm64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -219,10 +219,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iosarm64/1.0.0/kmp-sdk-iosarm64-1.0.0.module",
+        "url": "../../kmp-sdk-iosarm64/beta-1.0.2/kmp-sdk-iosarm64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iosarm64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -236,10 +236,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iosarm64/1.0.0/kmp-sdk-iosarm64-1.0.0.module",
+        "url": "../../kmp-sdk-iosarm64/beta-1.0.2/kmp-sdk-iosarm64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iosarm64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -253,10 +253,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iossimulatorarm64/1.0.0/kmp-sdk-iossimulatorarm64-1.0.0.module",
+        "url": "../../kmp-sdk-iossimulatorarm64/beta-1.0.2/kmp-sdk-iossimulatorarm64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iossimulatorarm64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -271,10 +271,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iossimulatorarm64/1.0.0/kmp-sdk-iossimulatorarm64-1.0.0.module",
+        "url": "../../kmp-sdk-iossimulatorarm64/beta-1.0.2/kmp-sdk-iossimulatorarm64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iossimulatorarm64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -288,10 +288,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iossimulatorarm64/1.0.0/kmp-sdk-iossimulatorarm64-1.0.0.module",
+        "url": "../../kmp-sdk-iossimulatorarm64/beta-1.0.2/kmp-sdk-iossimulatorarm64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iossimulatorarm64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -305,10 +305,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iosx64/1.0.0/kmp-sdk-iosx64-1.0.0.module",
+        "url": "../../kmp-sdk-iosx64/beta-1.0.2/kmp-sdk-iosx64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iosx64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -323,10 +323,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iosx64/1.0.0/kmp-sdk-iosx64-1.0.0.module",
+        "url": "../../kmp-sdk-iosx64/beta-1.0.2/kmp-sdk-iosx64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iosx64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     },
     {
@@ -340,10 +340,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../kmp-sdk-iosx64/1.0.0/kmp-sdk-iosx64-1.0.0.module",
+        "url": "../../kmp-sdk-iosx64/beta-1.0.2/kmp-sdk-iosx64-beta-1.0.2.module",
         "group": "in.co.niteshkukreja",
         "module": "kmp-sdk-iosx64",
-        "version": "1.0.0"
+        "version": "beta-1.0.2"
       }
     }
   ]
