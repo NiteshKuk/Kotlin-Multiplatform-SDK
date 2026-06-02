@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KmpSDK — Stakeholder Overview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: #0f172a; color: #1e293b; overflow: hidden; }
+    .deck { height: 100vh; width: 100vw; position: relative; }
+    .slide {
+      display: none; height: 100%; width: 100%; padding: 3rem 4rem;
+      background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+      flex-direction: column; justify-content: center;
+    }
+    .slide.active { display: flex; }
+    .slide.title { background: linear-gradient(135deg, #1a56db 0%, #0f172a 100%); color: #fff; text-align: center; }
+    .slide.title h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .slide.title p { font-size: 1.35rem; opacity: 0.9; line-height: 1.6; }
+    .slide.title .badge { margin-top: 2rem; font-size: 0.95rem; opacity: 0.75; }
+    h2 { font-size: 2.2rem; color: #1a56db; margin-bottom: 1.5rem; border-bottom: 3px solid #1a56db; padding-bottom: 0.5rem; }
+    ul { list-style: none; font-size: 1.45rem; line-height: 1.75; max-width: 52rem; }
+    ul li::before { content: "▸ "; color: #1a56db; font-weight: bold; }
+    ul li { margin-bottom: 0.65rem; }
+    table { border-collapse: collapse; font-size: 1.2rem; margin-top: 0.5rem; }
+    th, td { border: 1px solid #cbd5e1; padding: 0.6rem 1rem; text-align: left; }
+    th { background: #1a56db; color: #fff; }
+    .nav { position: fixed; bottom: 1.5rem; right: 2rem; color: #94a3b8; font-size: 0.9rem; }
+    .progress { position: fixed; bottom: 0; left: 0; height: 4px; background: #1a56db; transition: width 0.2s; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .img-placeholder { background: #cbd5e1; border: 2px dashed #64748b; padding: 2rem; text-align: center; font-size: 1rem; color: #475569; border-radius: 8px; }
+    code { background: #e2e8f0; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.95em; }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+    <section class="slide title active">
+      <h1>KmpSDK</h1>
+      <p>Headless Kotlin Multiplatform SDK<br>for Android &amp; iOS</p>
+      <p class="badge">Personal open-source project · Maven Central v1.0.0<br>[Your name] · [Date]</p>
+    </section>
+    <section class="slide">
+      <h2>Agenda</h2>
+      <ul>
+        <li>Mobile delivery challenges</li>
+        <li>What KmpSDK is (and is not)</li>
+        <li>Architecture &amp; integration paths</li>
+        <li>Business value for teams</li>
+        <li>Availability &amp; next steps</li>
+        <li>Q&amp;A</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>The challenge</h2>
+      <ul>
+        <li>Android &amp; iOS duplicate networking, auth, cache, offline logic</li>
+        <li>Repeated boilerplate slows every feature</li>
+        <li>UI differs — infrastructure problems do not</li>
+        <li>Harder maintenance and onboarding</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>What is KmpSDK?</h2>
+      <ul>
+        <li>Shared <strong>Kotlin Multiplatform</strong> library</li>
+        <li><strong>Headless</strong> — infrastructure only; you own all UI</li>
+        <li>Networking, auth, logging, optional offline sync, MVI contracts</li>
+        <li>Published on <strong>Maven Central</strong> — open source on GitHub</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>What it is NOT</h2>
+      <ul>
+        <li>Not a finished app or UI kit</li>
+        <li>Not no-code — teams still build screens &amp; rules</li>
+        <li>Not a company product unless your org adopts it</li>
+        <li>Not Android-only — one module, two platforms</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>Architecture</h2>
+      <div class="two-col">
+        <ul>
+          <li><strong>Host app</strong> — UI, ViewModels, navigation</li>
+          <li><strong>KmpSDK</strong> — core, data, domain, presentation</li>
+          <li><strong>Platform</strong> — Android &amp; iOS drivers</li>
+          <li>Flow: Maven → init → modules → your UI</li>
+        </ul>
+        <div class="img-placeholder">Insert diagram:<br>assets/kmpsdk-architecture-flow.png</div>
+      </div>
+    </section>
+    <section class="slide">
+      <h2>SDK vs your team</h2>
+      <table>
+        <tr><th>KmpSDK provides</th><th>Your team builds</th></tr>
+        <tr><td>HTTP, auth, logging</td><td>Brand, UX, screens</td></tr>
+        <tr><td>Cache, offline queue (optional)</td><td>DTOs, use cases</td></tr>
+        <tr><td>MVI contracts</td><td>ViewModels → UI</td></tr>
+      </table>
+    </section>
+    <section class="slide">
+      <h2>Three integration paths</h2>
+      <table>
+        <tr><th>Path</th><th>When</th><th>Your SQL?</th></tr>
+        <tr><td><strong>A — Online</strong></td><td>Login, forms, simple APIs</td><td>No</td></tr>
+        <tr><td><strong>B — SDK cache</strong></td><td>Last API response offline OK</td><td>No</td></tr>
+        <tr><td><strong>C — Offline-first</strong></td><td>Catalogs, field apps</td><td>Yes</td></tr>
+      </table>
+    </section>
+    <section class="slide">
+      <h2>Key capabilities</h2>
+      <ul>
+        <li>Authentication &amp; token refresh</li>
+        <li>Configurable offline / HTTP cache</li>
+        <li>Multi-environment (dev / staging / prod)</li>
+        <li>Telemetry, remote config, cert pinning</li>
+        <li>REST helpers &amp; feature generator CLI</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>Business value</h2>
+      <ul>
+        <li>Faster delivery — shared mobile infrastructure</li>
+        <li>Lower duplication — one KMP vs two native stacks</li>
+        <li>Consistent auth, errors, sync patterns</li>
+        <li>Documented paths for different app needs</li>
+        <li>Apache 2.0 — no vendor lock-in</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>Who benefits</h2>
+      <ul>
+        <li>Mobile engineers &amp; engineering managers</li>
+        <li>QA — predictable offline/error behaviour</li>
+        <li>Architecture / platform teams</li>
+        <li>Business units needing mobile features faster</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>Availability</h2>
+      <ul>
+        <li>Maven: <code>in.co.niteshkukreja:kmp-sdk:1.0.0</code></li>
+        <li>GitHub: NiteshKuk/Kotlin-Multiplatform-SDK</li>
+        <li>Apache 2.0 · README with Paths A/B/C</li>
+        <li>PR-based contributions · controlled releases</li>
+      </ul>
+    </section>
+    <section class="slide">
+      <h2>Next steps</h2>
+      <ul>
+        <li>Share README with mobile chapter leads</li>
+        <li>Pick one pilot feature (Path A or C)</li>
+        <li>Schedule a 30-minute developer demo</li>
+        <li>Collect feedback for roadmap</li>
+        <li><strong>Ask:</strong> sponsor a pilot squad?</li>
+      </ul>
+    </section>
+    <section class="slide title">
+      <h1>Thank you</h1>
+      <p>github.com/NiteshKuk/Kotlin-Multiplatform-SDK<br><br>Questions?</p>
+      <p class="badge">[Your email / Slack / LinkedIn]</p>
+    </section>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div class="nav">← → or Space · Slide <span id="num">1</span>/<span id="total"></span></div>
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    document.getElementById('total').textContent = total;
+    let i = 0;
+    function show(n) {
+      i = Math.max(0, Math.min(n, total - 1));
+      slides.forEach((s, j) => s.classList.toggle('active', j === i));
+      document.getElementById('num').textContent = i + 1;
+      document.getElementById('progress').style.width = ((i + 1) / total * 100) + '%';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(i + 1); }
+      if (e.key === 'ArrowLeft') show(i - 1);
+    });
+    show(0);
+  </script>
+</body>
+</html>

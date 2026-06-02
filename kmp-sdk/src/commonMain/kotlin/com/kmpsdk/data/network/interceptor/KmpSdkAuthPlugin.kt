@@ -19,10 +19,11 @@ class AuthPluginConfig {
  */
 val KmpSdkAuthPlugin = createClientPlugin("KmpSdkAuth", ::AuthPluginConfig) {
     val sessionManager = pluginConfig.sessionManager
-    val authConfig = pluginConfig.config.auth
+    val config = pluginConfig.config
     val logger = pluginConfig.logger
 
     onRequest { request, _ ->
+        val authConfig = config.auth
         if (!authConfig.enabled) return@onRequest
         if (request.headers.contains(HttpHeaders.Authorization)) return@onRequest
 
@@ -36,6 +37,7 @@ val KmpSdkAuthPlugin = createClientPlugin("KmpSdkAuth", ::AuthPluginConfig) {
     }
 
     onResponse { response ->
+        val authConfig = config.auth
         if (!authConfig.enabled) return@onResponse
         if (response.status != HttpStatusCode.Unauthorized &&
             response.status != HttpStatusCode.Forbidden

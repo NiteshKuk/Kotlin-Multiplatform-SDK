@@ -23,6 +23,7 @@ class KmpSdkLoggingPluginConfig {
 private val RequestBodyKey = io.ktor.util.AttributeKey<String>("KmpSdkRequestBody")
 
 val KmpSdkLoggingPlugin = createClientPlugin("KmpSdkLogging", ::KmpSdkLoggingPluginConfig) {
+    // Capture config here (ClientPluginBuilder scope). Ktor 3 hooks use a different receiver.
     val logger = pluginConfig.logger
     val config = pluginConfig.config
 
