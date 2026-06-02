@@ -1,117 +1,117 @@
 [
   {
     "moduleId": "module app.cash.sqldelight:runtime:2.0.2",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\app.cash.sqldelight-runtime-2.0.2-commonMain-asQ-DQ.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\app.cash.sqldelight-runtime-2.0.2-commonMain-asQ-DQ.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlin:kotlin-stdlib:2.1.0",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlin-kotlin-stdlib-2.1.0-commonMain-ITmP6A.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlin-kotlin-stdlib-2.1.0-commonMain-ITmP6A.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-coroutines-core-1.9.0-concurrentMain-ENDfhw.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-coroutines-core-1.9.0-concurrentMain-ENDfhw.klib",
     "sourceSetName": "concurrentMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-coroutines-core-1.9.0-commonMain-ENDfhw.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-coroutines-core-1.9.0-commonMain-ENDfhw.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-serialization-json-1.7.3-commonMain-O4ZS7Q.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-serialization-json-1.7.3-commonMain-O4ZS7Q.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-datetime:0.6.1",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-datetime-0.6.1-commonMain-ilTmRA.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-datetime-0.6.1-commonMain-ilTmRA.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-client-core:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-client-core-3.0.3-commonMain-HFCYJQ.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-client-core-3.0.3-commonMain-HFCYJQ.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-client-content-negotiation:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-client-content-negotiation-3.0.3-commonMain-GAQ9og.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-client-content-negotiation-3.0.3-commonMain-GAQ9og.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-serialization-kotlinx-json:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-serialization-kotlinx-json-3.0.3-commonMain-m8oUUg.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-serialization-kotlinx-json-3.0.3-commonMain-m8oUUg.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module app.cash.sqldelight:coroutines-extensions:2.0.2",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\app.cash.sqldelight-coroutines-extensions-2.0.2-commonMain-OJPMWA.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\app.cash.sqldelight-coroutines-extensions-2.0.2-commonMain-OJPMWA.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-serialization-core-1.7.3-commonMain-s2qClw.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-serialization-core-1.7.3-commonMain-s2qClw.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-http:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-http-3.0.3-commonMain-GYREtg.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-http-3.0.3-commonMain-GYREtg.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-events:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-events-3.0.3-commonMain-4up2hg.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-events-3.0.3-commonMain-4up2hg.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-websocket-serialization:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-websocket-serialization-3.0.3-commonMain-j0DyRQ.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-websocket-serialization-3.0.3-commonMain-j0DyRQ.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-sse:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-sse-3.0.3-commonMain-DCUoeA.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-sse-3.0.3-commonMain-DCUoeA.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-serialization:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-serialization-3.0.3-commonMain-WTPxdA.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-serialization-3.0.3-commonMain-WTPxdA.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-serialization-kotlinx:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-serialization-kotlinx-3.0.3-commonMain-ZZ-puA.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-serialization-kotlinx-3.0.3-commonMain-ZZ-puA.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-serialization-json-io:1.7.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-serialization-json-io-1.7.3-commonMain-w7DiNw.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-serialization-json-io-1.7.3-commonMain-w7DiNw.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-utils:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-utils-3.0.3-commonMain-KyHBqw.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-utils-3.0.3-commonMain-KyHBqw.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-websockets:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-websockets-3.0.3-commonMain-g5C8Ng.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-websockets-3.0.3-commonMain-g5C8Ng.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module io.ktor:ktor-io:3.0.3",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-io-3.0.3-commonMain-JwCZCA.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\io.ktor-ktor-io-3.0.3-commonMain-JwCZCA.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-io-core:0.5.4",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-io-core-0.5.4-commonMain-VZyyzw.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-io-core-0.5.4-commonMain-VZyyzw.klib",
     "sourceSetName": "commonMain"
   },
   {
     "moduleId": "module org.jetbrains.kotlinx:kotlinx-io-bytestring:0.5.4",
-    "file": "E:\\AndroidProjects\\KMPSdk\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-io-bytestring-0.5.4-commonMain-ptgxIQ.klib",
+    "file": "D:\\Android Projects\\Personal\\Kotlin-Multiplatform-SDK\\kmp-sdk\\build\\kotlinTransformedMetadataLibraries\\commonMain\\org.jetbrains.kotlinx-kotlinx-io-bytestring-0.5.4-commonMain-ptgxIQ.klib",
     "sourceSetName": "commonMain"
   }
 ]

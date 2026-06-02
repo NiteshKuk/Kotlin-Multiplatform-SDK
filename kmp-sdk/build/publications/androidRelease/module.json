@@ -1,10 +1,10 @@
 {
   "formatVersion": "1.1",
   "component": {
-    "url": "../../kmp-sdk/1.0.0/kmp-sdk-1.0.0.module",
+    "url": "../../kmp-sdk/beta-1.0.2/kmp-sdk-beta-1.0.2.module",
     "group": "in.co.niteshkukreja",
     "module": "kmp-sdk",
-    "version": "1.0.0",
+    "version": "beta-1.0.2",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -42,12 +42,12 @@
       "files": [
         {
           "name": "kmp-sdk-release.aar",
-          "url": "kmp-sdk-android-1.0.0.aar",
-          "size": 475102,
-          "sha512": "89a6c5d559411af22eac3d90448a99751dcfc799bb17e8138066ebbca5cfd096e6f00037d1e705d2aead6a0bec426f1bc322c4ea1e052c2b06b6eced918a5850",
-          "sha256": "ab1a890402305c2b90c2cd1e73651bf25772197990d82d970e2dc293131e501d",
-          "sha1": "786825acb592f78aa50c24d827ef74fc7ff8aeee",
-          "md5": "b2afddccaab2560b8c37d2fdce7b0260"
+          "url": "kmp-sdk-android-beta-1.0.2.aar",
+          "size": 471648,
+          "sha512": "8d4cb0c679362fbcc8ff9e0d65260811a5e302059c3565bdc4a3d856593a4b3c4dc300bbb848e5957a5f3683f3691a8bcc012d6a6d0c7b09a4bc20c1c1bb81ee",
+          "sha256": "b540590aa52a823f0a3b784bc870275d43ca37f00312a863ef7a00c5a9d32b19",
+          "sha1": "8c2643d6bbcbc1097e57c7df339c84f279fa468e",
+          "md5": "2615b2e1ab48256561cc2c4340c335a2"
         }
       ]
     },
@@ -316,12 +316,12 @@
       "files": [
         {
           "name": "kmp-sdk-release.aar",
-          "url": "kmp-sdk-android-1.0.0.aar",
-          "size": 475102,
-          "sha512": "89a6c5d559411af22eac3d90448a99751dcfc799bb17e8138066ebbca5cfd096e6f00037d1e705d2aead6a0bec426f1bc322c4ea1e052c2b06b6eced918a5850",
-          "sha256": "ab1a890402305c2b90c2cd1e73651bf25772197990d82d970e2dc293131e501d",
-          "sha1": "786825acb592f78aa50c24d827ef74fc7ff8aeee",
-          "md5": "b2afddccaab2560b8c37d2fdce7b0260"
+          "url": "kmp-sdk-android-beta-1.0.2.aar",
+          "size": 471648,
+          "sha512": "8d4cb0c679362fbcc8ff9e0d65260811a5e302059c3565bdc4a3d856593a4b3c4dc300bbb848e5957a5f3683f3691a8bcc012d6a6d0c7b09a4bc20c1c1bb81ee",
+          "sha256": "b540590aa52a823f0a3b784bc870275d43ca37f00312a863ef7a00c5a9d32b19",
+          "sha1": "8c2643d6bbcbc1097e57c7df339c84f279fa468e",
+          "md5": "2615b2e1ab48256561cc2c4340c335a2"
         }
       ]
     },
@@ -338,13 +338,13 @@
       },
       "files": [
         {
-          "name": "kmp-sdk-android-1.0.0-sources.jar",
-          "url": "kmp-sdk-android-1.0.0-sources.jar",
-          "size": 68868,
-          "sha512": "81ec978c7a60a2d85046192438bd0b3979ad07e496d9780ddd1a46881ece49f609bd2e8dbe60770511d093d487e50fe7b9c448d2a3bf47fc5383f5712f591654",
-          "sha256": "17dd0eb99246cb019f3e195792bb9b8ca46428ace834e4c6d935aeaf7d2e3452",
-          "sha1": "3091a2227a0bf514e3ccf529ec6cf944034657a5",
-          "md5": "d300c6a1bacab4a1f41f631b49ee7f8f"
+          "name": "kmp-sdk-android-beta-1.0.2-sources.jar",
+          "url": "kmp-sdk-android-beta-1.0.2-sources.jar",
+          "size": 66733,
+          "sha512": "37bb7038bc806c3f325997c4261501fc5253f98bb79c8f9596731d993341abfb92a14ca272f67d81268f5aac0c334d191ad90099c94a4b75bd7693f138613ccb",
+          "sha256": "8479c08fd951021066cd31aec14a4b9a22b7abca5ef3abf9128495e99c1a3e92",
+          "sha1": "a545577ae0cbea8e67f075df8cf7783a15a7b801",
+          "md5": "ba65c9601fc40061303e54979c2e4d60"
         }
       ]
     }

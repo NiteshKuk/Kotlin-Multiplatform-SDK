@@ -18,7 +18,7 @@ open class BasePaginatedRepository<TDomain, TDto>(
     private val tag: String,
     private val pageSize: Int,
     private val observeLocal: () -> Flow<List<TDomain>>,
-    private val countLocal: suspend () -> Long,
+    countLocal: suspend () -> Long,
     private val replaceAll: suspend (List<TDomain>) -> Unit,
     private val appendPage: suspend (List<TDomain>) -> Unit,
     private val remote: PaginatedRemoteDataSource<TDto>,
@@ -28,13 +28,15 @@ open class BasePaginatedRepository<TDomain, TDto>(
     private val logger: Logger,
 ) : PaginatedRepository<TDomain> {
 
+    private val countLocalBlock: suspend () -> Long = countLocal
+
     private var currentPage = 0
     override var hasMore: Boolean = true
         protected set
 
     override fun observeAll(): Flow<List<TDomain>> = observeLocal()
 
-    override suspend fun countLocal(): Long = countLocal()
+    override suspend fun countLocal(): Long = countLocalBlock()
 
     override suspend fun loadInitial(pageSize: Int): KmpSdkResult<Unit> {
         currentPage = 0
@@ -54,7 +56,7 @@ open class BasePaginatedRepository<TDomain, TDto>(
         pageSize: Int,
         replace: Boolean,
     ): KmpSdkResult<Unit> {
-        val cachedCount = countLocal()
+        val cachedCount = countLocalBlock()
 
         if (!connectivityMonitor.isOnline()) {
             return handleOffline(cachedCount)

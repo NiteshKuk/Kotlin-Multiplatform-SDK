@@ -2,6 +2,7 @@ package com.kmpsdk.data.network.interceptor
 
 import com.kmpsdk.core.config.KmpSdkConfig
 import com.kmpsdk.core.logger.Logger
+import io.ktor.client.plugins.api.ClientPlugin
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.statement.HttpResponse
@@ -12,21 +13,16 @@ import io.ktor.http.contentType
 import io.ktor.utils.io.charsets.Charsets
 import io.ktor.utils.io.core.readText
 import io.ktor.utils.io.readRemaining
-import kotlinx.serialization.json.Json
-
-class KmpSdkLoggingPluginConfig {
-    lateinit var logger: Logger
-    lateinit var config: KmpSdkConfig
-    lateinit var json: Json
-}
 
 private val RequestBodyKey = io.ktor.util.AttributeKey<String>("KmpSdkRequestBody")
 
-val KmpSdkLoggingPlugin = createClientPlugin("KmpSdkLogging", ::KmpSdkLoggingPluginConfig) {
-    // Capture config here (ClientPluginBuilder scope). Ktor 3 hooks use a different receiver.
-    val logger = pluginConfig.logger
-    val config = pluginConfig.config
-
+/**
+ * Factory avoids [pluginConfig] receiver issues in Ktor 3 + Kotlin 2.x and lateinit init-order bugs.
+ */
+fun createKmpSdkLoggingPlugin(
+    logger: Logger,
+    config: KmpSdkConfig,
+): ClientPlugin<Unit> = createClientPlugin("KmpSdkLogging") {
     onRequest { request, body ->
         val bodyText = extractRequestBody(body)
         if (bodyText != null) {

@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>in.co.niteshkukreja</groupId>
   <artifactId>kmp-sdk</artifactId>
-  <version>1.0.0</version>
+  <version>beta-1.0.2</version>
   <name>KmpSDK</name>
   <description>Headless Kotlin Multiplatform SDK for Android and iOS.</description>
   <url>https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK</url>
