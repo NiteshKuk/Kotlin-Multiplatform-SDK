@@ -174,7 +174,7 @@ dependencyResolutionManagement {
 Add `kmp-sdk` to your host **shared** module:
 
 ```kotlin
-implementation("in.co.niteshkukreja:kmp-sdk:[GitHub Releases](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases)")
+implementation("in.co.niteshkukreja:kmp-sdk:(see [GitHub Releases](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases))")
 ```
 
 **Maven coordinates:**
@@ -191,7 +191,7 @@ implementation("in.co.niteshkukreja:kmp-sdk:[GitHub Releases](https://github.com
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("in.co.niteshkukreja:kmp-sdk:[GitHub Releases](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases)")
+            implementation("in.co.niteshkukreja:kmp-sdk:(see [GitHub Releases](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases))")
         }
     }
 }
