@@ -183,7 +183,7 @@ implementation("in.co.niteshkukreja:kmp-sdk:[GitHub Releases]")
 |-------|--------|
 | Group | `in.co.niteshkukreja` |
 | Artifact | `kmp-sdk` |
-| Version | `1.0.0` (see [GitHub Releases](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases)) |
+| Version | (see [GitHub Releases](https://github.com/NiteshKuk/Kotlin-Multiplatform-SDK/releases)) |
 
 **Example (`shared/build.gradle.kts`):**
 
