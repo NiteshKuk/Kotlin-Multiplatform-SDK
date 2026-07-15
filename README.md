@@ -5,7 +5,7 @@ Headless **Kotlin Multiplatform** SDK for Android and iOS.
 Infrastructure for networking, auth, cache/offline sync, and MVI **contracts**.  
 **You own all UI** (Compose, SwiftUI, XML, …).
 
-Current Maven version (see `gradle.properties`): **`1.0.1`**  
+Current Maven version (see `gradle.properties`): **[RELEASES]**  
 Coordinates: `in.co.niteshkukreja:kmp-sdk`
 
 ---
