@@ -1,6 +1,7 @@
 package com.kmpsdk.core.config
 
 import com.kmpsdk.core.logger.LogLevel
+import com.kmpsdk.core.resilience.ResilienceConfig
 import com.kmpsdk.data.offline.OfflineReplayStrategy
 import com.kmpsdk.domain.sync.SyncPolicy
 
@@ -29,6 +30,7 @@ data class KmpSdkConfig(
     val certificatePins: List<String> = emptyList(),
     val backgroundSyncIntervalMillis: Long? = null,
     val validateOnStartup: Boolean = true,
+    val resilience: ResilienceConfig = ResilienceConfig(),
 ) {
     companion object {
         val DEFAULT_REDACTED_HEADERS = setOf(
@@ -63,9 +65,14 @@ class KmpSdkConfigBuilder {
     var certificatePins: List<String> = emptyList()
     var backgroundSyncIntervalMillis: Long? = null
     var validateOnStartup: Boolean = true
+    var resilience: ResilienceConfig = ResilienceConfig()
 
     fun auth(block: AuthConfigBuilder.() -> Unit) {
         auth = AuthConfigBuilder().apply(block).build()
+    }
+
+    fun resilience(block: com.kmpsdk.core.resilience.ResilienceDsl.() -> Unit) {
+        resilience = com.kmpsdk.core.resilience.ResilienceDsl().apply(block).build()
     }
 
     fun build(): KmpSdkConfig = KmpSdkConfig(
@@ -90,6 +97,7 @@ class KmpSdkConfigBuilder {
         certificatePins = certificatePins,
         backgroundSyncIntervalMillis = backgroundSyncIntervalMillis,
         validateOnStartup = validateOnStartup,
+        resilience = resilience,
     )
 }
 

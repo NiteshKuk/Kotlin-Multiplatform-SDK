@@ -51,4 +51,6 @@ class KmpSdkRegistry internal constructor(
     }
 
     internal fun registeredCount(): Int = factories.size
+
+    fun registeredTypes(): Set<KClass<*>> = factories.keys.toSet()
 }

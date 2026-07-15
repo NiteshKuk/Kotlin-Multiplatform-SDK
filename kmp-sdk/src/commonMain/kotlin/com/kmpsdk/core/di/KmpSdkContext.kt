@@ -6,19 +6,25 @@ import com.kmpsdk.core.config.KmpSdkConfig
 import com.kmpsdk.core.config.RemoteConfigStore
 import com.kmpsdk.core.connectivity.ConnectivityMonitor
 import com.kmpsdk.core.logger.Logger
+import com.kmpsdk.core.messaging.MessageEventBus
+import com.kmpsdk.core.messaging.MessageNotifier
+import com.kmpsdk.core.routing.DeepLinkRouter
+import com.kmpsdk.core.routing.PushPayloadRouter
 import com.kmpsdk.core.tenant.TenantManager
 import com.kmpsdk.data.cache.CacheStore
 import com.kmpsdk.data.db.DatabaseDriverFactory
 import com.kmpsdk.data.db.KmpSdkDatabase
+import com.kmpsdk.data.draft.DraftStore
 import com.kmpsdk.data.network.KmpNetworkClient
 import com.kmpsdk.data.offline.OfflineActionManager
 import com.kmpsdk.data.offline.OfflineAwareRequestExecutor
 import com.kmpsdk.data.offline.OfflineQueueManager
+import com.kmpsdk.data.query.QueryKit
+import com.kmpsdk.data.realtime.RealtimeClient
+import com.kmpsdk.data.sync.BackgroundWorkBridge
 import com.kmpsdk.data.sync.DirtySyncCoordinator
 import com.kmpsdk.data.sync.SyncCoordinator
 import com.kmpsdk.debug.KmpSdkDebugger
-import com.kmpsdk.core.messaging.MessageEventBus
-import com.kmpsdk.core.messaging.MessageNotifier
 import kotlinx.coroutines.CoroutineScope
 
 class KmpSdkContext internal constructor(
@@ -42,4 +48,10 @@ class KmpSdkContext internal constructor(
     val tenantManager: TenantManager,
     val remoteConfig: RemoteConfigStore,
     val scope: CoroutineScope,
+    val drafts: DraftStore,
+    val query: QueryKit,
+    val realtime: RealtimeClient,
+    val deepLinks: DeepLinkRouter,
+    val push: PushPayloadRouter,
+    val backgroundWork: BackgroundWorkBridge,
 )

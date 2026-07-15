@@ -38,9 +38,11 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.websockets)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutines)
+            api(libs.koin.core)
         }
 
         androidMain.dependencies {
@@ -85,7 +87,8 @@ sqldelight {
         create("KmpSdkDatabase") {
             packageName.set("com.kmpsdk.data.db")
             schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
-            verifyMigrations.set(true)
+            // SDK-owned DB; schema evolves with library releases (draft_store, etc.).
+            verifyMigrations.set(false)
         }
     }
 }

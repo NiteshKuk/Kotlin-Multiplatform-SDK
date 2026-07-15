@@ -11,6 +11,8 @@ import com.kmpsdk.data.network.interceptor.createKmpSdkAuthPlugin
 import com.kmpsdk.data.network.interceptor.createKmpSdkLoggingPlugin
 import com.kmpsdk.core.telemetry.KmpSdkTelemetry
 import com.kmpsdk.core.telemetry.TelemetryEvent
+import com.kmpsdk.core.resilience.CircuitOpenException
+import com.kmpsdk.core.resilience.ResilienceController
 import com.kmpsdk.data.network.error.ApiErrorParser
 import com.kmpsdk.data.offline.OfflineQueueManager
 import com.kmpsdk.data.offline.OfflineRequestPayload
@@ -20,6 +22,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -69,6 +72,7 @@ class KmpNetworkClient(
     private val apiErrorParser = ApiErrorParser(json)
     private val deduplicator = RequestDeduplicator()
     private val rateLimitHandler = RateLimitHandler(config)
+    private val resilience = ResilienceController(config.resilience)
     private var activeBaseUrl: String = config.baseUrl
     private var activeTenantHeaders: Map<String, String> = emptyMap()
 
@@ -76,6 +80,7 @@ class KmpNetworkClient(
         install(ContentNegotiation) {
             json(json)
         }
+        install(WebSockets)
         install(HttpTimeout) {
             requestTimeoutMillis = 30_000
             connectTimeoutMillis = 15_000
@@ -219,15 +224,20 @@ class KmpNetworkClient(
 
         val started = Clock.System.now().toEpochMilliseconds()
         return try {
-            val bodyText = if (method == HttpMethod.Get && config.enableRequestDeduplication) {
-                deduplicator.execute(cacheKey) {
+            val bodyText = resilience.execute(
+                path = path,
+                isRetryable = { throwable -> isResilienceRetryable(throwable) },
+            ) {
+                if (method == HttpMethod.Get && config.enableRequestDeduplication) {
+                    deduplicator.execute(cacheKey) {
+                        rateLimitHandler.executeWithBackoff {
+                            executeWithAuthRetry(method, path, capture.block)
+                        }
+                    }
+                } else {
                     rateLimitHandler.executeWithBackoff {
                         executeWithAuthRetry(method, path, capture.block)
                     }
-                }
-            } else {
-                rateLimitHandler.executeWithBackoff {
-                    executeWithAuthRetry(method, path, capture.block)
                 }
             }
             if (method == HttpMethod.Get && config.enableHttpCache && useCache && bodyText != null) {
@@ -236,6 +246,9 @@ class KmpNetworkClient(
             val result = KmpSdkResult.Success(json.decodeFromString(serializer, bodyText ?: "null"))
             emitApiTelemetry(method, path, statusCode = 200, started = started, success = true)
             result
+        } catch (exception: CircuitOpenException) {
+            emitApiTelemetry(method, path, statusCode = null, started = started, success = false)
+            resilience.mapCircuitOpen(exception)
         } catch (exception: KmpHttpException) {
             emitApiTelemetry(method, path, exception.httpCode, started, success = false)
             if (method == HttpMethod.Get && config.enableHttpCache && useCache) {
@@ -249,6 +262,21 @@ class KmpNetworkClient(
                 readCachedResponse(cacheKey, serializer)?.let { return it }
             }
             KmpSdkResult.Failure(mapThrowable(exception))
+        }
+    }
+
+    private fun isResilienceRetryable(throwable: Throwable): Boolean {
+        val retry = config.resilience.retry
+        return when (throwable) {
+            is CircuitOpenException -> false
+            is KmpHttpException -> {
+                when {
+                    throwable.httpCode in 500..599 -> retry.retryOnServerErrors
+                    throwable.httpCode == 429 -> true
+                    else -> false
+                }
+            }
+            else -> retry.retryOnNetwork
         }
     }
 

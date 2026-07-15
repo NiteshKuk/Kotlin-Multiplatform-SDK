@@ -1,22 +1,23 @@
-feature: Order
-endpoint: /orders
-name: orders
+feature: Product
+endpoint: /products
+# sync target + RestResourceApi registration name
+name: products
 fields:
   - name: id
     type: String
     primaryKey: true
   - name: title
     type: String
-  - name: amount
+  - name: price
     type: Double
 mutations:
   enabled: true
   create:
     method: POST
-    path: /orders
+    path: /products
   update:
     method: PUT
-    path: /orders/{id}
+    path: /products/{id}
   delete:
     method: DELETE
-    path: /orders/{id}
+    path: /products/{id}

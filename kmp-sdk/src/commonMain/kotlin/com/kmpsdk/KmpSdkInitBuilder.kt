@@ -3,14 +3,17 @@ package com.kmpsdk
 import com.kmpsdk.core.auth.TokenRefreshHandler
 import com.kmpsdk.core.config.EnvironmentDsl
 import com.kmpsdk.core.config.KmpSdkConfig
-import com.kmpsdk.core.config.RemoteConfigStore
 import com.kmpsdk.core.config.SdkProfile
 import com.kmpsdk.core.config.applyProfile
 import com.kmpsdk.core.config.buildConfigForEnvironment
 import com.kmpsdk.core.config.kmpSdkConfig
 import com.kmpsdk.core.di.KmpSdkModule
 import com.kmpsdk.core.logger.LogLevel
+import com.kmpsdk.core.resilience.ResilienceDsl
+import com.kmpsdk.core.routing.DeepLinkRouter
+import com.kmpsdk.core.routing.PushPayloadRouter
 import com.kmpsdk.data.offline.OfflineReplayStrategy
+import com.kmpsdk.data.sync.BackgroundWorkDsl
 import com.kmpsdk.domain.sync.SyncPolicy
 
 /**
@@ -44,6 +47,10 @@ class KmpSdkInitBuilder {
     private val modules = mutableListOf<KmpSdkModule>()
     private var authConfigBlock: (com.kmpsdk.core.config.AuthConfigBuilder.() -> Unit)? = null
     private val environmentBlocks = linkedMapOf<String, com.kmpsdk.core.config.KmpSdkConfigBuilder.() -> Unit>()
+    private var resilienceBlock: (ResilienceDsl.() -> Unit)? = null
+    private var deepLinkBlock: (DeepLinkRouter.() -> Unit)? = null
+    private var pushBlock: (PushPayloadRouter.() -> Unit)? = null
+    private var backgroundWorkBlock: (BackgroundWorkDsl.() -> Unit)? = null
 
     fun auth(block: com.kmpsdk.core.config.AuthConfigBuilder.() -> Unit) {
         authConfigBlock = block
@@ -65,6 +72,22 @@ class KmpSdkInitBuilder {
         remoteConfigFetcher = fetcher
     }
 
+    fun resilience(block: ResilienceDsl.() -> Unit) {
+        resilienceBlock = block
+    }
+
+    fun deepLinks(block: DeepLinkRouter.() -> Unit) {
+        deepLinkBlock = block
+    }
+
+    fun push(block: PushPayloadRouter.() -> Unit) {
+        pushBlock = block
+    }
+
+    fun backgroundWork(block: BackgroundWorkDsl.() -> Unit) {
+        backgroundWorkBlock = block
+    }
+
     internal fun buildConfig(): KmpSdkConfig {
         val config = if (environmentName != null && environmentBlocks.isNotEmpty()) {
             buildConfigForEnvironment(
@@ -75,16 +98,21 @@ class KmpSdkInitBuilder {
         } else {
             kmpSdkConfig { this@KmpSdkInitBuilder.applyToConfigBuilder(this) }
         }
-
-        return remoteConfigFetcher?.let { fetcher ->
-            // applied after RemoteConfigStore refresh in KmpSdk.init
-            config
-        } ?: config
+        return config
     }
 
     internal fun modules(): List<KmpSdkModule> = modules.toList()
 
     internal fun remoteConfigFetcherOrNull(): (suspend () -> Map<String, String>)? = remoteConfigFetcher
+
+    internal fun environmentBlocksOrEmpty(): Map<String, com.kmpsdk.core.config.KmpSdkConfigBuilder.() -> Unit> =
+        environmentBlocks.toMap()
+
+    internal fun deepLinkBlockOrNull(): (DeepLinkRouter.() -> Unit)? = deepLinkBlock
+
+    internal fun pushBlockOrNull(): (PushPayloadRouter.() -> Unit)? = pushBlock
+
+    internal fun backgroundWorkBlockOrNull(): (BackgroundWorkDsl.() -> Unit)? = backgroundWorkBlock
 
     private fun applyToConfigBuilder(target: com.kmpsdk.core.config.KmpSdkConfigBuilder) {
         profile?.let { target.applyProfile(it) }
@@ -108,5 +136,6 @@ class KmpSdkInitBuilder {
         target.backgroundSyncIntervalMillis = backgroundSyncIntervalMillis
         target.validateOnStartup = validateOnStartup
         authConfigBlock?.let { block -> target.auth(block) }
+        resilienceBlock?.let { block -> target.resilience(block) }
     }
 }

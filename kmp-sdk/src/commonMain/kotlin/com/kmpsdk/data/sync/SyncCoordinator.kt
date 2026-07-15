@@ -36,10 +36,15 @@ data class SyncTarget(
 
 /**
  * Orchestrates offline queue replay, then refreshes registered repositories.
+ *
+ * Per-feature UI status lives in [statusStore]. Prefer refreshing through
+ * [com.kmpsdk.data.repository.BaseSyncRepository] so [statusStore] updates accurately
+ * (Idle / Syncing / OfflineCached / Failed).
  */
 class SyncCoordinator(
     private val replayOfflineQueue: suspend () -> KmpSdkResult<Int>,
     private val logger: Logger = Logger.create("SyncCoordinator"),
+    val statusStore: SyncStatusStore = SyncStatusStore(),
 ) {
     private val targets = mutableListOf<SyncTarget>()
     private val _state = MutableStateFlow(SyncState())
@@ -47,11 +52,18 @@ class SyncCoordinator(
 
     fun register(name: String, refresh: suspend () -> KmpSdkResult<Unit>) {
         targets.removeAll { it.name == name }
+        statusStore.ensureRegistered(name)
         targets.add(SyncTarget(name, refresh))
     }
 
     fun register(target: SyncTarget) {
         register(target.name, target.refresh)
+    }
+
+    suspend fun refreshTarget(name: String): KmpSdkResult<Unit> {
+        val target = targets.firstOrNull { it.name == name }
+            ?: return KmpSdkResult.Failure(KmpSdkError.Unknown("Unknown sync target: $name"))
+        return target.refresh()
     }
 
     suspend fun syncAll(): SyncResult {
