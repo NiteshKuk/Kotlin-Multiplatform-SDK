@@ -5,7 +5,7 @@ Headless **Kotlin Multiplatform** SDK for Android and iOS.
 Infrastructure for networking, auth, cache/offline sync, and MVI **contracts**.  
 **You own all UI** (Compose, SwiftUI, XML, …).
 
-Current Maven version (see `gradle.properties`): **`1.0.1`**  
+Current Maven version (see `gradle.properties`): **`1.2.0`**  
 Coordinates: `in.co.niteshkukreja:kmp-sdk`
 
 ---
@@ -17,6 +17,7 @@ Coordinates: `in.co.niteshkukreja:kmp-sdk`
 | Install in 5 minutes | [docs/getting-started.md](docs/getting-started.md) |
 | Path A / B / C explained | [docs/integration-paths.md](docs/integration-paths.md) |
 | Offline list + CRUD | [docs/feature-kit.md](docs/feature-kit.md) |
+| SSL / certificate pinning | [docs/networking.md](docs/networking.md#ssl--certificate-pinning) |
 | Copy-paste recipes | [docs/recipes.md](docs/recipes.md) |
 | Something broken | [docs/troubleshooting.md](docs/troubleshooting.md) |
 | Full docs index | [docs/README.md](docs/README.md) |
@@ -37,7 +38,7 @@ Need YOUR SQL offline for this feature?
 
 ```kotlin
 // shared/build.gradle.kts
-implementation("in.co.niteshkukreja:kmp-sdk:1.0.1")
+implementation("in.co.niteshkukreja:kmp-sdk:1.2.0")
 
 // Application.onCreate
 KmpSdk.init(this) {
@@ -47,6 +48,21 @@ KmpSdk.init(this) {
 ```
 
 Repositories: `mavenCentral()` (add `mavenLocal()` only when testing a local publish).
+
+### Security (Android SSL pinning)
+
+```kotlin
+KmpSdk.init(this) {
+    baseUrl = "https://api.example.com"
+    certificatePins = listOf(
+        "api.example.com/<sha256Base64Leaf>",
+        "api.example.com/<sha256Base64Backup>", // always keep a spare
+    )
+    install(YourFeatureModule)
+}
+```
+
+Format: `hostname/base64Sha256PublicKey`. **Android only** (OkHttp). Details + openssl command → [docs/networking.md](docs/networking.md#ssl--certificate-pinning).
 
 ---
 
@@ -66,7 +82,7 @@ Use your **consumer test app** (e.g. TestingKmpSdk) as the living sample — see
 | Paths A/B/C | [docs/integration-paths.md](docs/integration-paths.md) |
 | Feature Kit / generator / OpenAPI | [docs/feature-kit.md](docs/feature-kit.md) |
 | Auth, Firebase remote config, env, tenant | [docs/auth-and-config.md](docs/auth-and-config.md) |
-| Cache, resilience, upload, realtime | [docs/networking.md](docs/networking.md) |
+| Cache, resilience, upload, realtime, **SSL pinning** | [docs/networking.md](docs/networking.md) |
 | Offline queue, sync status | [docs/offline-sync.md](docs/offline-sync.md) |
 | DI, deep links, push, background | [docs/platform-integration.md](docs/platform-integration.md) |
 | Recipes | [docs/recipes.md](docs/recipes.md) |
@@ -97,6 +113,7 @@ Mac (incl. iOS targets for publish):
 - Compose / SwiftUI screens or themes  
 - Platform toasts/snackbars  
 - Your domain entities (User, Product, …) — those stay in the host app  
+- iOS certificate pinning (host must wire Darwin / `NSURLSession` if needed)  
 
 ---
 

@@ -35,3 +35,19 @@ Ensure you are on a build that marks `QueryPredicate` as `internal` (not private
 ## Host type not found in feature module
 
 You must `register<MyType>` in `KmpSdk.init` — Koin/Hilt alone is not enough.
+
+## TLS / `SSLPeerUnverifiedException`
+
+Two different cases:
+
+1. **Wrong host cert (hostname not verified)**  
+   Message shows another CN/SAN (captive portal, corporate proxy, VPN, bad DNS).  
+   Example: requesting `www.example.com` but cert is `securelogin.hpe.com`.  
+   Fix network first; pinning cannot help until the real API cert is served.
+
+2. **Certificate pinning failure**  
+   You reached the right host, but the public-key pin does not match.  
+   Re-run openssl (see [networking.md](networking.md#ssl--certificate-pinning)), update `certificatePins`, keep a backup pin.  
+   Temporarily set `certificatePins = emptyList()` only to confirm the site works without pins.
+
+**iOS:** SDK does not apply `certificatePins` yet — Android/OkHttp only.

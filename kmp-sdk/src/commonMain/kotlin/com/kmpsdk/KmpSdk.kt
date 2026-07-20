@@ -134,7 +134,7 @@ object KmpSdk {
             config = builder.buildConfig(),
             tokenRefreshHandler = builder.tokenRefreshHandler,
             tokenStoreOverride = null,
-            configure = { builder.modules().forEach(::install) },
+            configure = { builder.applyRegistry(this) },
             remoteConfigFetcher = builder.remoteConfigFetcherOrNull(),
             builder = builder,
         )

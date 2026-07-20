@@ -15,7 +15,7 @@
 `shared/build.gradle.kts`:
 
 ```kotlin
-implementation("in.co.niteshkukreja:kmp-sdk:1.0.1") // match your release
+implementation("in.co.niteshkukreja:kmp-sdk:1.2.0") // match gradle.properties sdkVersion
 ```
 
 ## 2) Initialize once
@@ -26,6 +26,8 @@ Android `Application.onCreate`:
 KmpSdk.init(this) {
     baseUrl = "https://api.example.com"
     logLevel = LogLevel.DEBUG
+    // optional Android SSL pins — see networking.md#ssl--certificate-pinning
+    // certificatePins = listOf("api.example.com/<base64>")
     install(AboutFeatureModule) // your module
 }
 ```

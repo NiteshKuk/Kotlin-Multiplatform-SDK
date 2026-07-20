@@ -7,7 +7,9 @@ import com.kmpsdk.core.config.SdkProfile
 import com.kmpsdk.core.config.applyProfile
 import com.kmpsdk.core.config.buildConfigForEnvironment
 import com.kmpsdk.core.config.kmpSdkConfig
+import com.kmpsdk.core.di.KmpSdkContext
 import com.kmpsdk.core.di.KmpSdkModule
+import com.kmpsdk.core.di.KmpSdkRegistry
 import com.kmpsdk.core.logger.LogLevel
 import com.kmpsdk.core.resilience.ResilienceDsl
 import com.kmpsdk.core.routing.DeepLinkRouter
@@ -45,6 +47,7 @@ class KmpSdkInitBuilder {
     var remoteConfigFetcher: (suspend () -> Map<String, String>)? = null
 
     private val modules = mutableListOf<KmpSdkModule>()
+    private val hostRegistrations = mutableListOf<KmpSdkRegistry.() -> Unit>()
     private var authConfigBlock: (com.kmpsdk.core.config.AuthConfigBuilder.() -> Unit)? = null
     private val environmentBlocks = linkedMapOf<String, com.kmpsdk.core.config.KmpSdkConfigBuilder.() -> Unit>()
     private var resilienceBlock: (ResilienceDsl.() -> Unit)? = null
@@ -54,6 +57,17 @@ class KmpSdkInitBuilder {
 
     fun auth(block: com.kmpsdk.core.config.AuthConfigBuilder.() -> Unit) {
         authConfigBlock = block
+    }
+
+    /**
+     * Register a host-owned type into the SDK registry (analytics, flags, etc.).
+     */
+    fun <T : Any> register(type: kotlin.reflect.KClass<T>, factory: (KmpSdkContext) -> T) {
+        hostRegistrations += { register(type, factory) }
+    }
+
+    inline fun <reified T : Any> register(noinline factory: (KmpSdkContext) -> T) {
+        register(T::class, factory)
     }
 
     fun install(module: KmpSdkModule) {
@@ -102,6 +116,11 @@ class KmpSdkInitBuilder {
     }
 
     internal fun modules(): List<KmpSdkModule> = modules.toList()
+
+    internal fun applyRegistry(registry: KmpSdkRegistry) {
+        hostRegistrations.forEach { it(registry) }
+        modules.forEach { registry.install(it) }
+    }
 
     internal fun remoteConfigFetcherOrNull(): (suspend () -> Map<String, String>)? = remoteConfigFetcher
 

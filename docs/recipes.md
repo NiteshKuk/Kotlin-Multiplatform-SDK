@@ -65,3 +65,52 @@ KmpSdk.fileUpload.upload<UploadResponse>(path = "/upload", fileName = "a.jpg", b
 ```kotlin
 KmpSdk.syncStatus.observe("products").collect { /* OfflineCached → banner */ }
 ```
+
+## 9) Certificate pinning (Android)
+
+```kotlin
+KmpSdk.init(this) {
+    baseUrl = "https://api.example.com"
+    certificatePins = listOf(
+        "api.example.com/<sha256Base64>",
+        "api.example.com/<backupSha256Base64>",
+    )
+}
+```
+
+Format `hostname/base64` — details in [networking.md](networking.md#ssl--certificate-pinning).
+
+## 10) Drafts + local query
+
+```kotlin
+KmpSdk.drafts.save("create_product", CreateProductBody(...))
+val draft = KmpSdk.drafts.load<CreateProductBody>("create_product")
+
+KmpSdk.query.sources.register(
+    name = "products",
+    observeAll = { store.observeAll() },
+) { item, field ->
+    when (field) {
+        "title" -> item.title
+        else -> null
+    }
+}
+```
+
+## 11) Deep link → refresh
+
+```kotlin
+deepLinks {
+    route("orders/{id}") { _, _ ->
+        KmpSdk.syncCoordinator.refreshTarget("orders")
+    }
+}
+// later:
+KmpSdk.deepLinks.handle("myapp://orders/42")
+```
+
+## 12) Environment switch (debug)
+
+```kotlin
+KmpSdk.environments?.switchTo("staging")
+```

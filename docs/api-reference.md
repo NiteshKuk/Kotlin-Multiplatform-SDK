@@ -2,7 +2,8 @@
 
 | API | Purpose |
 |-----|---------|
-| `KmpSdk.init { }` | Initialize + install modules |
+| `KmpSdk.init { }` | Initialize + install modules (+ optional `register<T>`) |
+| `KmpSdk.init(context) { }` | Android: sets platform context then same DSL |
 | `KmpSdk.validate()` | Startup health check |
 | `KmpSdk.get<T>()` | Resolve registered dependency |
 | `KmpSdk.networkClient` | HTTP + cache + resilience |
@@ -24,8 +25,25 @@
 | `KmpSdk.remoteConfig` | Remote config map |
 | `KmpSdk.telemetry` | Analytics hooks |
 | `KmpSdk.messageEventBus` | UI message stream |
-| `KmpSdk.debugger` | Diagnostics |
+| `KmpSdk.debugger` | Diagnostics (`snapshot()`, queue inspect, full sync) |
 | `KmpSdk.connectivityMonitor` | Online/offline |
 | `KmpSdk.scope` | Shared coroutine scope |
 
-Init flag kitchen sink examples: see older monolithic README in git history, or Step 20 style block in team notes.
+### Init flags (common)
+
+| Flag | Purpose |
+|------|---------|
+| `certificatePins` | Android SSL public-key pins (`host/base64`) — [networking.md](networking.md#ssl--certificate-pinning) |
+| `enableHttpCache` | Path B HTTP response cache |
+| `syncPolicy` | Offline / cache strategy |
+| `resilience { }` | Retry + circuit breaker |
+| `environments { }` / `environmentName` | Named env packs |
+| `deepLinks { }` / `push { }` / `backgroundWork { }` | Platform routers / sync |
+
+### Debugger (quick)
+
+```kotlin
+val snap = KmpSdk.debugger.snapshot()
+// snap.isOnline, pendingOfflineRequests, baseUrl, syncState, …
+KmpSdk.debugger.triggerFullSync()
+```

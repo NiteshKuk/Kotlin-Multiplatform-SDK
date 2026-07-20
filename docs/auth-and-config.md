@@ -44,13 +44,19 @@ KmpSdk.init(this) {
         staging { baseUrl = "https://staging.api.example.com" }
         prod {
             baseUrl = "https://api.example.com"
-            certificatePins = listOf("api.example.com/abcd=")
+            // Android SSL pins — see networking.md#ssl--certificate-pinning
+            certificatePins = listOf(
+                "api.example.com/<leafPinBase64>",
+                "api.example.com/<backupPinBase64>",
+            )
         }
     }
     environmentName = "staging"
 }
 KmpSdk.environments?.switchTo("prod")
 ```
+
+Leave pins empty on `dev` / `staging` unless those hosts use the same public keys.
 
 ## Multi-tenant (still available)
 

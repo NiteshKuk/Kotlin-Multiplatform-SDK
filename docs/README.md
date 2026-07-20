@@ -10,7 +10,7 @@ Start here after the root [README](../README.md).
 | Pick Path A / B / C | [integration-paths.md](integration-paths.md) |
 | Offline list + CRUD quickly | [feature-kit.md](feature-kit.md) |
 | Auth, Firebase remote config, env, tenant | [auth-and-config.md](auth-and-config.md) |
-| Cache, retry, upload, realtime | [networking.md](networking.md) |
+| Cache, retry, upload, realtime, **SSL pinning** | [networking.md](networking.md) |
 | Offline queue, sync status, dirty sync | [offline-sync.md](offline-sync.md) |
 | Deep links, push, background work, DI | [platform-integration.md](platform-integration.md) |
 | Copy-paste scenarios | [recipes.md](recipes.md) |

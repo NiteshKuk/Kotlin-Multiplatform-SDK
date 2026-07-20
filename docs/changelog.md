@@ -2,6 +2,8 @@
 
 High-level recent SDK additions. Prefer GitHub Releases for versioned notes.
 
+- **Docs** — SSL / certificate pinning guide (format, openssl, Android-only, captive-portal vs pin mismatch); README bumped to **1.2.0**
+- **Init** — Android `KmpSdk.init(context)` delegates to common init (deep links / push / env / background / remote config apply); `register<T>` on init DSL
 - **OpenAPI → Feature Kit** — `tools/openapi-import`
 - **Circuit breaker + smart retry** — `resilience { }`
 - **WebSocket / SSE** — `KmpSdk.realtime`
