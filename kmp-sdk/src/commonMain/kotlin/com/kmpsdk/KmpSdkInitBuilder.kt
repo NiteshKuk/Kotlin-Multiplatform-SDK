@@ -1,6 +1,7 @@
 package com.kmpsdk
 
 import com.kmpsdk.core.auth.TokenRefreshHandler
+import com.kmpsdk.core.config.CertificateParams
 import com.kmpsdk.core.config.EnvironmentDsl
 import com.kmpsdk.core.config.KmpSdkConfig
 import com.kmpsdk.core.config.SdkProfile
@@ -38,7 +39,7 @@ class KmpSdkInitBuilder {
     var enableRequestDeduplication: Boolean = true
     var enableRateLimitBackoff: Boolean = true
     var maxRateLimitRetries: Int = 3
-    var certificatePins: List<String> = emptyList()
+    var certificateBuilder: CertificateParams = CertificateParams()
     var backgroundSyncIntervalMillis: Long? = null
     var validateOnStartup: Boolean = true
     var tokenRefreshHandler: TokenRefreshHandler? = null
@@ -151,7 +152,7 @@ class KmpSdkInitBuilder {
         target.enableRequestDeduplication = enableRequestDeduplication
         target.enableRateLimitBackoff = enableRateLimitBackoff
         target.maxRateLimitRetries = maxRateLimitRetries
-        target.certificatePins = certificatePins
+        target.certificateBuilder = certificateBuilder
         target.backgroundSyncIntervalMillis = backgroundSyncIntervalMillis
         target.validateOnStartup = validateOnStartup
         authConfigBlock?.let { block -> target.auth(block) }

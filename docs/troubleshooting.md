@@ -47,7 +47,7 @@ Two different cases:
 
 2. **Certificate pinning failure**  
    You reached the right host, but the public-key pin does not match.  
-   Re-run openssl (see [networking.md](networking.md#ssl--certificate-pinning)), update `certificatePins`, keep a backup pin.  
-   Temporarily set `certificatePins = emptyList()` only to confirm the site works without pins.
+   Re-run openssl (see [networking.md](networking.md#ssl--certificate-pinning)), update `certificateBuilder` (`hostname` + `certificatePins`), keep a backup pin.  
+   Temporarily use `certificateBuilder = CertificateParams()` (empty pins) only to confirm the site works without pins.
 
-**iOS:** SDK does not apply `certificatePins` yet — Android/OkHttp only.
+**iOS:** SDK does not apply `certificateBuilder` yet — Android/OkHttp only.

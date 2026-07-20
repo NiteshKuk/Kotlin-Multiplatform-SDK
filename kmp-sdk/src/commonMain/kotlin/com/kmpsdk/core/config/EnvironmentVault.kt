@@ -26,7 +26,7 @@ class EnvironmentVault(
 
     fun requirePinsFor(name: String): Boolean {
         val cfg = build(name)
-        return cfg.certificatePins.isNotEmpty()
+        return cfg.certificateBuilder.certificatePins.isNotEmpty()
     }
 
     fun build(name: String): KmpSdkConfig =
@@ -40,7 +40,7 @@ class EnvironmentVault(
         require(environmentBlocks.containsKey(name)) { "Unknown environment: $name" }
         val cfg = build(name)
         if (name == "prod" || name.contains("prod", ignoreCase = true)) {
-            require(cfg.certificatePins.isNotEmpty() || !cfg.validateOnStartup) {
+            require(cfg.certificateBuilder.certificatePins.isNotEmpty() || !cfg.validateOnStartup) {
                 "Environment '$name' should define certificatePins for production"
             }
         }

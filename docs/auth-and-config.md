@@ -45,9 +45,12 @@ KmpSdk.init(this) {
         prod {
             baseUrl = "https://api.example.com"
             // Android SSL pins — see networking.md#ssl--certificate-pinning
-            certificatePins = listOf(
-                "api.example.com/<leafPinBase64>",
-                "api.example.com/<backupPinBase64>",
+            certificateBuilder = CertificateParams(
+                hostname = "api.example.com",
+                certificatePins = listOf(
+                    "<leafPinBase64>",
+                    "<backupPinBase64>",
+                ),
             )
         }
     }

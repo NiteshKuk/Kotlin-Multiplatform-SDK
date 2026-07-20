@@ -33,7 +33,7 @@
 
 | Flag | Purpose |
 |------|---------|
-| `certificatePins` | Android SSL public-key pins (`host/base64`) — [networking.md](networking.md#ssl--certificate-pinning) |
+| `certificateBuilder` | Android SSL pins — `CertificateParams(hostname, certificatePins)` — [networking.md](networking.md#ssl--certificate-pinning) |
 | `enableHttpCache` | Path B HTTP response cache |
 | `syncPolicy` | Offline / cache strategy |
 | `resilience { }` | Retry + circuit breaker |

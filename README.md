@@ -53,17 +53,22 @@ Repositories: `mavenCentral()` (add `mavenLocal()` only when testing a local pub
 ### Security (Android SSL pinning)
 
 ```kotlin
+import com.kmpsdk.core.config.CertificateParams
+
 KmpSdk.init(this) {
     baseUrl = "https://api.example.com"
-    certificatePins = listOf(
-        "api.example.com/<sha256Base64Leaf>",
-        "api.example.com/<sha256Base64Backup>", // always keep a spare
+    certificateBuilder = CertificateParams(
+        hostname = "api.example.com",
+        certificatePins = listOf(
+            "<sha256Base64Leaf>",
+            "<sha256Base64Backup>", // always keep a spare
+        ),
     )
     install(YourFeatureModule)
 }
 ```
 
-Format: `hostname/base64Sha256PublicKey`. **Android only** (OkHttp). Details + openssl command → [docs/networking.md](docs/networking.md#ssl--certificate-pinning).
+One hostname + Base64 pin hashes (SDK adds `sha256/`). **Android only** (OkHttp). Details → [docs/networking.md](docs/networking.md#ssl--certificate-pinning).
 
 ---
 

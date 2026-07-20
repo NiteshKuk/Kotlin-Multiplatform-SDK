@@ -52,20 +52,26 @@ maxRateLimitRetries = 3
 
 Pin **public-key SHA-256** hashes so the app only trusts known certs for your API host.
 
+Use [`CertificateParams`](../kmp-sdk/src/commonMain/kotlin/com/kmpsdk/core/config/KmpSdkConfig.kt): one **hostname** + a list of **Base64 pin hashes** (no `host/` prefix on each pin).
+
 ### Init
 
 ```kotlin
+import com.kmpsdk.core.config.CertificateParams
+
 KmpSdk.init(this) {
     baseUrl = "https://api.example.com"
-    certificatePins = listOf(
-        "api.example.com/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
-        "api.example.com/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=", // backup
+    certificateBuilder = CertificateParams(
+        hostname = "api.example.com",
+        certificatePins = listOf(
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=", // backup
+        ),
     )
 }
 ```
 
-**Format:** `hostname/<base64Sha256PublicKey>`  
-The SDK prefixes `sha256/` for OkHttp. Do **not** include the `sha256/` prefix yourself.
+The SDK prefixes `sha256/` for OkHttp. Do **not** include the `sha256/` prefix in the list entries.
 
 Prefer **two or more pins** (current leaf + next/backup or intermediate) so a normal cert rotation does not lock users out.
 
@@ -79,18 +85,18 @@ openssl s_client -connect api.example.com:443 -servername api.example.com </dev/
   | openssl enc -base64
 ```
 
-Put the printed Base64 into: `api.example.com/<thatValue>`
+Put the printed Base64 into `certificatePins` and set `hostname` to the API host (e.g. `api.example.com`).
 
 ### Platform support
 
 | Platform | Behavior |
 |----------|----------|
-| **Android** | Applied via OkHttp `CertificatePinner` |
+| **Android** | Applied via OkHttp `CertificatePinner` (`hostname` + each pin) |
 | **iOS** | Not applied in the SDK today — configure Darwin / `NSURLSession` in the host if you need pins |
 
 ### Prod environments
 
-Set pins on the **prod** env pack (see [auth-and-config.md](auth-and-config.md#environment-vault)). Switching to a prod-named environment with `validateOnStartup = true` expects pins to be present.
+Set `certificateBuilder` on the **prod** env pack (see [auth-and-config.md](auth-and-config.md#environment-vault)). Switching to a prod-named environment with `validateOnStartup = true` expects pins to be present.
 
 ### When pinning is *not* the problem
 

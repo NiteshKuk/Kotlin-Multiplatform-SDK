@@ -27,7 +27,7 @@ KmpSdk.init(this) {
     baseUrl = "https://api.example.com"
     logLevel = LogLevel.DEBUG
     // optional Android SSL pins — see networking.md#ssl--certificate-pinning
-    // certificatePins = listOf("api.example.com/<base64>")
+    // certificateBuilder = CertificateParams(hostname = "api.example.com", certificatePins = listOf("<base64>"))
     install(AboutFeatureModule) // your module
 }
 ```

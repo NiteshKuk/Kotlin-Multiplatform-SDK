@@ -27,7 +27,7 @@ data class KmpSdkConfig(
     val enableRequestDeduplication: Boolean = true,
     val enableRateLimitBackoff: Boolean = true,
     val maxRateLimitRetries: Int = 3,
-    val certificatePins: List<String> = emptyList(),
+    val certificateBuilder: CertificateParams = CertificateParams(),
     val backgroundSyncIntervalMillis: Long? = null,
     val validateOnStartup: Boolean = true,
     val resilience: ResilienceConfig = ResilienceConfig(),
@@ -42,6 +42,13 @@ data class KmpSdkConfig(
         )
     }
 }
+
+data class CertificateParams(
+    val hostname: String = "",
+    val certificatePins: List<String> = emptyList(),
+)
+
+
 
 class KmpSdkConfigBuilder {
     var baseUrl: String = ""
@@ -62,7 +69,7 @@ class KmpSdkConfigBuilder {
     var enableRequestDeduplication: Boolean = true
     var enableRateLimitBackoff: Boolean = true
     var maxRateLimitRetries: Int = 3
-    var certificatePins: List<String> = emptyList()
+    var certificateBuilder: CertificateParams = CertificateParams()
     var backgroundSyncIntervalMillis: Long? = null
     var validateOnStartup: Boolean = true
     var resilience: ResilienceConfig = ResilienceConfig()
@@ -94,7 +101,7 @@ class KmpSdkConfigBuilder {
         enableRequestDeduplication = enableRequestDeduplication,
         enableRateLimitBackoff = enableRateLimitBackoff,
         maxRateLimitRetries = maxRateLimitRetries,
-        certificatePins = certificatePins,
+        certificateBuilder = certificateBuilder,
         backgroundSyncIntervalMillis = backgroundSyncIntervalMillis,
         validateOnStartup = validateOnStartup,
         resilience = resilience,

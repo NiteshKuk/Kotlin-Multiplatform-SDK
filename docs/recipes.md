@@ -93,16 +93,21 @@ KmpSdk.syncStatus.observe("products").collect { /* OfflineCached → banner */ }
 ## 9) Certificate pinning (Android)
 
 ```kotlin
+import com.kmpsdk.core.config.CertificateParams
+
 KmpSdk.init(this) {
     baseUrl = "https://api.example.com"
-    certificatePins = listOf(
-        "api.example.com/<sha256Base64>",
-        "api.example.com/<backupSha256Base64>",
+    certificateBuilder = CertificateParams(
+        hostname = "api.example.com",
+        certificatePins = listOf(
+            "<sha256Base64>",
+            "<backupSha256Base64>",
+        ),
     )
 }
 ```
 
-Format `hostname/base64` — details in [networking.md](networking.md#ssl--certificate-pinning).
+`CertificateParams(hostname, certificatePins)` — details in [networking.md](networking.md#ssl--certificate-pinning).
 
 ## 10) Drafts + local query
 
