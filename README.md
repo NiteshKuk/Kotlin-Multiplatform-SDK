@@ -5,7 +5,7 @@ Headless **Kotlin Multiplatform** SDK for Android and iOS.
 Infrastructure for networking, auth, cache/offline sync, and MVI **contracts**.  
 **You own all UI** (Compose, SwiftUI, XML, …).
 
-Current Maven version (see `gradle.properties`): **`1.2.0`**  
+Current Maven version (see `gradle.properties`): **[Releases]**  
 Coordinates: `in.co.niteshkukreja:kmp-sdk`
 
 ---
@@ -38,7 +38,7 @@ Need YOUR SQL offline for this feature?
 
 ```kotlin
 // shared/build.gradle.kts
-implementation("in.co.niteshkukreja:kmp-sdk:1.2.0")
+implementation("in.co.niteshkukreja:kmp-sdk:[Releases]")
 
 // Application.onCreate
 KmpSdk.init(this) {
