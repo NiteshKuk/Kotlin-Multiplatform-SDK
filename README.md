@@ -15,6 +15,7 @@ Coordinates: `in.co.niteshkukreja:kmp-sdk`
 | I need… | Go to |
 |---------|--------|
 | Install in 5 minutes | [docs/getting-started.md](docs/getting-started.md) |
+| AppAnalytics / custom host types / telemetry | [docs/getting-started.md](docs/getting-started.md#4-inject-host-types--appanalytics--custom-classes--telemetry) |
 | Path A / B / C explained | [docs/integration-paths.md](docs/integration-paths.md) |
 | Offline list + CRUD | [docs/feature-kit.md](docs/feature-kit.md) |
 | SSL / certificate pinning | [docs/networking.md](docs/networking.md#ssl--certificate-pinning) |
@@ -78,7 +79,7 @@ Use your **consumer test app** (e.g. TestingKmpSdk) as the living sample — see
 
 | Topic | Doc |
 |-------|-----|
-| Getting started + host injection | [docs/getting-started.md](docs/getting-started.md) |
+| Getting started + host injection / AppAnalytics / telemetry | [docs/getting-started.md](docs/getting-started.md) |
 | Paths A/B/C | [docs/integration-paths.md](docs/integration-paths.md) |
 | Feature Kit / generator / OpenAPI | [docs/feature-kit.md](docs/feature-kit.md) |
 | Auth, Firebase remote config, env, tenant | [docs/auth-and-config.md](docs/auth-and-config.md) |

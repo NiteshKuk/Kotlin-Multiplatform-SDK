@@ -15,6 +15,34 @@ bindSingleton { kmpSdkKodeinGet<RestResourceApi<Product>>() }
 
 Host → SDK modules: still `register` in `KmpSdk.init` (see [getting-started.md](getting-started.md)).
 
+## AppAnalytics + custom classes + telemetry
+
+Same pattern for any host service (`AppAnalytics`, crash reporter, …):
+
+```kotlin
+KmpSdk.init(this) {
+    baseUrl = "https://api.example.com"
+    register<AppAnalytics> { createAppAnalytics() }
+    install(NewsFeatureModule)
+}
+
+// In module / use case:
+registry.resolve<AppAnalytics>().event("news_open")
+
+// After init — SDK events → your tracker:
+KmpSdk.telemetry.addListener { event ->
+    when (event) {
+        is TelemetryEvent.ApiCallCompleted ->
+            KmpSdk.get<AppAnalytics>().event("sdk_api_call", mapOf("path" to event.path))
+        is TelemetryEvent.SyncCompleted ->
+            KmpSdk.get<AppAnalytics>().event("sdk_sync")
+        else -> Unit
+    }
+}
+```
+
+Details: [getting-started.md §4](getting-started.md#4-inject-host-types--appanalytics--custom-classes--telemetry).
+
 ## Deep links
 
 ```kotlin

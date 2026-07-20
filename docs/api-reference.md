@@ -23,7 +23,7 @@
 | `KmpSdk.offlineActions` | Domain offline actions |
 | `KmpSdk.tenantManager` | Tenant / base URL switch |
 | `KmpSdk.remoteConfig` | Remote config map |
-| `KmpSdk.telemetry` | Analytics hooks |
+| `KmpSdk.telemetry` | Analytics hooks — `addListener` / `removeListener`; forward to host `AppAnalytics` |
 | `KmpSdk.messageEventBus` | UI message stream |
 | `KmpSdk.debugger` | Diagnostics (`snapshot()`, queue inspect, full sync) |
 | `KmpSdk.connectivityMonitor` | Online/offline |

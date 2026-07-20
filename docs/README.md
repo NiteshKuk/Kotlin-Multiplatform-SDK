@@ -7,6 +7,7 @@ Start here after the root [README](../README.md).
 | I want to… | Open |
 |------------|------|
 | Install & init in 5 minutes | [getting-started.md](getting-started.md) |
+| AppAnalytics, custom classes, telemetry bridge | [getting-started.md](getting-started.md#4-inject-host-types--appanalytics--custom-classes--telemetry) |
 | Pick Path A / B / C | [integration-paths.md](integration-paths.md) |
 | Offline list + CRUD quickly | [feature-kit.md](feature-kit.md) |
 | Auth, Firebase remote config, env, tenant | [auth-and-config.md](auth-and-config.md) |

@@ -33,12 +33,36 @@ api.create(CreateProductBody(...))
 
 See [feature-kit.md](feature-kit.md).
 
-## 4) Host analytics injection
+## 4) Host analytics (custom class) + telemetry
 
 ```kotlin
-register<AppAnalytics> { AppAnalytics() }
-// registry.resolve<AppAnalytics>() inside feature module
+// 1) Your type (any custom class / interface)
+interface AppAnalytics {
+    fun event(name: String, params: Map<String, String> = emptyMap())
+}
+
+// 2) Register
+KmpSdk.init(this) {
+    baseUrl = "https://api.example.com"
+    register<AppAnalytics> { MyFirebaseAnalytics() } // your implementation
+    install(UserFeatureModule)
+}
+
+// 3) Feature module
+val analytics = registry.resolve<AppAnalytics>()
+// or UI: KmpSdk.get<AppAnalytics>().event("tap")
+
+// 4) Optional — forward SDK telemetry
+KmpSdk.telemetry.addListener { event ->
+    when (event) {
+        is TelemetryEvent.ApiCallCompleted ->
+            KmpSdk.get<AppAnalytics>().event("sdk_api", mapOf("path" to event.path))
+        else -> Unit
+    }
+}
 ```
+
+Full walkthrough (expect/actual, verify on Android/iOS): [getting-started.md](getting-started.md#4-inject-host-types--appanalytics--custom-classes--telemetry).
 
 ## 5) Login + session
 
