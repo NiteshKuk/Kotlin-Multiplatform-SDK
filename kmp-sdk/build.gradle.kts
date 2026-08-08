@@ -1,5 +1,6 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.gradle.plugins.signing.SigningExtension
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -95,7 +96,7 @@ sqldelight {
 
 configure<MavenPublishBaseExtension> {
     publishToMavenCentral(automaticRelease = true)
-
+    signAllPublications()
     coordinates(
         groupId = group.toString(),
         artifactId = "kmp-sdk",
@@ -127,4 +128,8 @@ configure<MavenPublishBaseExtension> {
             developerConnection.set("scm:git:ssh://git@github.com/NiteshKuk/Kotlin-Multiplatform-SDK.git")
         }
     }
+}
+
+extensions.configure<SigningExtension> {
+    useGpgCmd()
 }
