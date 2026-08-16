@@ -1,6 +1,6 @@
 [versions]
 agp = "8.7.3"
-kotlin = "2.1.0"
+kotlin = "2.3.20"
 compose-multiplatform = "1.7.3"
 ktor = "3.0.3"
 sqldelight = "2.0.2"
@@ -8,7 +8,7 @@ coroutines = "1.9.0"
 serialization = "1.7.3"
 lifecycle = "2.8.7"
 koin = "4.0.0"
-datetime = "0.6.1"
+datetime = "0.7.1"
 mavenPublish = "0.34.0"
 
 [libraries]

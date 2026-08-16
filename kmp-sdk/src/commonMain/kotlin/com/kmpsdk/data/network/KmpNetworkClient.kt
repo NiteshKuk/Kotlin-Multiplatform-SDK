@@ -43,7 +43,7 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.utils.io.core.buildPacket
 import io.ktor.utils.io.core.writeFully
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json

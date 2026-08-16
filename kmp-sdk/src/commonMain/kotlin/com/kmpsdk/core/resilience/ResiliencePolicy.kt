@@ -3,7 +3,7 @@ package com.kmpsdk.core.resilience
 import com.kmpsdk.domain.error.KmpSdkError
 import com.kmpsdk.domain.error.KmpSdkResult
 import kotlinx.coroutines.delay
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 data class RetryPolicy(
     val maxAttempts: Int = 1,

@@ -4,7 +4,7 @@ import com.kmpsdk.core.config.KmpSdkConfig
 import com.kmpsdk.data.db.KmpSdkDatabase
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 interface CacheStore {
     suspend fun get(key: String): String?

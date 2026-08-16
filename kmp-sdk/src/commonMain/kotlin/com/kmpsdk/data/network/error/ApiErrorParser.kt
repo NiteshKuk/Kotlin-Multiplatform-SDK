@@ -78,9 +78,11 @@ class ApiErrorParser(
         }
 
         val code = root.string("code")
+            ?: root.obj("error")?.string("code")
             ?: root.string("error_code")
             ?: root.string("error")
         val message = root.string("message")
+            ?: root.obj("error")?.string("message")
             ?: root.string("error_description")
             ?: root.string("detail")
             ?: root.string("title")
@@ -115,6 +117,9 @@ class ApiErrorParser(
 
     private fun JsonObject.string(key: String): String? =
         (this[key] as? JsonPrimitive)?.contentOrNull
+
+    private fun JsonObject.obj(key: String): JsonObject? =
+        this[key] as? JsonObject
 
     private fun JsonElement.toErrorMessage(): String = when (this) {
         is JsonPrimitive -> contentOrNull ?: toString()

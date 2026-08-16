@@ -3,7 +3,7 @@ package com.kmpsdk.data.offline
 import com.kmpsdk.core.logger.Logger
 import com.kmpsdk.data.db.KmpSdkDatabase
 import com.kmpsdk.domain.error.KmpSdkResult
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
