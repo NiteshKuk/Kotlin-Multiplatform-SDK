@@ -93,7 +93,8 @@ class KmpNetworkClient(
         defaultRequest {
             url(activeBaseUrl)
             activeTenantHeaders.forEach { (key, value) -> header(key, value) }
-            contentType(ContentType.Application.Json)
+            // Do not set a global JSON Content-Type — it breaks multipart uploads.
+            // JSON requests set Content-Type via [setJsonBodyWithOfflineCapture].
         }
     }
 
@@ -288,6 +289,7 @@ class KmpNetworkClient(
         serializer = serializer(),
         useCache = false,
         block = {
+            headers.remove(HttpHeaders.ContentType)
             setBody(
                 MultiPartFormDataContent(
                     formData {
