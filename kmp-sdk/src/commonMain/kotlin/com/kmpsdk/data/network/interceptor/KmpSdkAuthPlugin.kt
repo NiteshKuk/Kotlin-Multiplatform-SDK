@@ -34,9 +34,7 @@ fun createKmpSdkAuthPlugin(
     onResponse { response ->
         val authConfig = config.auth
         if (!authConfig.enabled) return@onResponse
-        if (response.status != HttpStatusCode.Unauthorized &&
-            response.status != HttpStatusCode.Forbidden
-        ) {
+        if (response.status != HttpStatusCode.Unauthorized) {
             return@onResponse
         }
 

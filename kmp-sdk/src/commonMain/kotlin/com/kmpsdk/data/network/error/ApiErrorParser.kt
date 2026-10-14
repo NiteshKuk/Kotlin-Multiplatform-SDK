@@ -43,19 +43,25 @@ class ApiErrorParser(
     fun toKmpSdkError(httpCode: Int, responseBody: String?, fallbackMessage: String): KmpSdkError {
         val apiError = parse(httpCode, responseBody)
         val message = apiError.message.ifBlank { fallbackMessage }
+        val jamBusinessFailure = isJamApiBusinessFailure(responseBody)
 
-        return when (httpCode) {
-            401, 403 -> KmpSdkError.Auth(
+        return when {
+            httpCode == 401 && !jamBusinessFailure -> KmpSdkError.Auth(
                 message = message,
                 httpCode = httpCode,
                 responseBody = responseBody,
             )
-            in 500..599 -> KmpSdkError.Server(
+            httpCode == 403 && !jamBusinessFailure -> KmpSdkError.Auth(
                 message = message,
                 httpCode = httpCode,
                 responseBody = responseBody,
             )
-            in 400..499 -> KmpSdkError.Business(
+            httpCode in 500..599 -> KmpSdkError.Server(
+                message = message,
+                httpCode = httpCode,
+                responseBody = responseBody,
+            )
+            httpCode in 400..499 || jamBusinessFailure -> KmpSdkError.Business(
                 message = message,
                 code = apiError.code,
                 httpCode = httpCode,
@@ -69,6 +75,20 @@ class ApiErrorParser(
                 responseBody = responseBody,
             )
         }
+    }
+
+    /**
+     * JAM APIs return `{ "success": false, "error": { "code", "message" } }` for business failures,
+     * including many HTTP 403 cases that must not clear the auth session.
+     */
+    private fun isJamApiBusinessFailure(responseBody: String?): Boolean {
+        if (responseBody.isNullOrBlank()) return false
+        val root = runCatching { json.parseToJsonElement(responseBody) }.getOrNull() as? JsonObject
+            ?: return false
+        val success = (root["success"] as? JsonPrimitive)?.contentOrNull
+        if (success != "false") return false
+        return root.obj("error")?.string("code") != null ||
+            root.obj("error")?.string("message") != null
     }
 
     private fun parseJson(body: String): ApiError {

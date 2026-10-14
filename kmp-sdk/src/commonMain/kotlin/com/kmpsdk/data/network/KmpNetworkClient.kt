@@ -360,7 +360,7 @@ class KmpNetworkClient(
         return try {
             readSuccessfulBody(executeOnce(method, path, block))
         } catch (exception: KmpHttpException) {
-            if (config.auth.enabled && (exception.httpCode == 401 || exception.httpCode == 403)) {
+            if (config.auth.enabled && exception.httpCode == 401) {
                 if (sessionManager.handleUnauthorized(exception.httpCode)) {
                     return readSuccessfulBody(executeOnce(method, path, block))
                 }
